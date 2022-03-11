@@ -34,7 +34,7 @@ public class Controller
 			System.out.print(deck.get(index) + " ");
 		}
 		
-		for(int index = 0; index < 5; index++)
+		for(int index = 0; index < 3; index++)
 		{
 			hand.add(deck.get(0));
 			deck.remove(0);
@@ -42,7 +42,7 @@ public class Controller
 		
 		System.out.println();
 		
-		for(int index = 0; index < 5; index++)
+		for(int index = 0; index < 3; index++)
 		{
 			System.out.print(hand.get(index) + " ");
 		}
