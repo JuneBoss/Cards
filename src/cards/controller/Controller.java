@@ -7,20 +7,22 @@ public class Controller
 {
 
 	private Deck deck;
-	private ArrayList <String> hand;
+	private Deck hand;
 	
 	public Controller()
 	{
 	
 	this.deck = new Deck(false, true);
+	this.hand = new Deck(true, false);
 	
-	System.out.print(deck.getContents());
+	System.out.println(deck.getContents());
 	deck.shuffle();
-	System.out.println();
-	System.out.print(deck.getContents());
-		
-		
+	System.out.println(deck.getContents());
 	
+	
+	hand.add(deck.draw(3));
+	System.out.println(hand.getContents());
+	System.out.println(deck.getContents());
 		
 	}
 	
