@@ -108,4 +108,29 @@ public class Deck
 		
 		return check;
 	}
+	
+	public ArrayList<String> split()
+	{
+		ArrayList<String> half = new ArrayList<String>();
+		int limit = this.contents.size()/2;
+		
+		for(int index = 0; index < limit; index++)
+		{
+			half.add(peek());
+			take();
+		}
+		
+		return half;
+	}
+	
+	public int checkSize()
+	{
+		int size = 0;
+		
+		size = this.contents.size();
+		
+		return size;
+	}
+	
+	
 }
