@@ -38,4 +38,43 @@ public class Controller
 		System.out.println(hand.getContents());
 		
 	}
+	
+	public int battle(String left, String right)
+	{
+		int outcome = 0;
+		
+		switch (left)
+		{
+		case "2":
+			if(right == "A" || right == "K" || right == "Q")
+			{
+				outcome = 1;
+			}
+			else if (right == "2")
+			{
+				outcome = 3;
+			}
+			else
+			{
+				outcome = 2;
+			}
+			break;
+		case "3":
+			if(right == "2" || right == "A" || right == "K")
+			{
+				outcome = 1;
+			}
+			else if (right == "3")
+			{
+				outcome = 3;
+			}
+			else
+			{
+				outcome = 2;
+			}
+			break;
+		}
+		
+		return outcome;
+	}
 }
