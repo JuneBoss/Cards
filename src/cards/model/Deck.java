@@ -9,8 +9,8 @@ public class Deck
 	private Boolean empty;
 	private ArrayList<String> contents;
 
-	//index 0 acts as the top of the deck because i think it looks better
-	public Deck(Boolean empty, Boolean jokers)
+	
+	public Deck(Boolean empty, Boolean jokers)//the first parameter determines if the deck has cards, if true then the second determines if there is jokers among them
 	{
 		if(empty)
 		{
