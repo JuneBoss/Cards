@@ -8,18 +8,27 @@ public class Controller
 
 	private Deck Ldeck;
 	private Deck Rdeck;
+	private Deck Discard;
 	private Deck Lpile1;
 	private Deck Rpile1;
-	private char Ltemp;
-	private char Rtemp;
+	private Deck Lpile2;
+	private Deck Rpile2;
+	private Deck Lpile3;
+	private Deck Rpile3;
+	
 	
 	public Controller()
 	{
 	
 	this.Ldeck = new Deck(false, false);
 	this.Rdeck = new Deck(true, false);
+	this.Discard = new Deck(true, false);
 	this.Lpile1 = new Deck(true, false);
 	this.Rpile1 = new Deck(true, false);
+	this.Lpile2 = new Deck(true, false);
+	this.Rpile2 = new Deck(true, false);
+	this.Lpile3 = new Deck(true, false);
+	this.Rpile3 = new Deck(true, false);
 		
 	}
 	
@@ -32,17 +41,59 @@ public class Controller
 		
 		Lpile1.add(Ldeck.draw());
 		Rpile1.add(Rdeck.draw());
+		Lpile2.add(Ldeck.draw());
+		Rpile2.add(Rdeck.draw());
+		Lpile3.add(Ldeck.draw());
+		Rpile3.add(Rdeck.draw());
 		
-		System.out.println("Left: " + Lpile1.getContents());
-		System.out.println("Right: " + Rpile1.getContents());
+		System.out.print("Left 1: " + Lpile1.getContents());
+		System.out.println(" Right 1: " + Rpile1.getContents());
+		System.out.print("Left 2: " + Lpile2.getContents());
+		System.out.println(" Right 2: " + Rpile2.getContents());
+		System.out.print("Left 3: " + Lpile3.getContents());
+		System.out.println(" Right 3: " + Rpile3.getContents());
 		
-		Ltemp = Lpile1.peek().charAt(0);
-		Rtemp = Rpile1.peek().charAt(0);
+		System.out.println(victor(Lpile1.peek(), Rpile1.peek()));
+		System.out.println(victor(Lpile2.peek(), Rpile2.peek()));
+		System.out.println(victor(Lpile3.peek(), Rpile3.peek()));
 		
-		System.out.println(Ltemp + " " + Rtemp);
+		test();
+		System.out.println(Discard.peek());
 	}
 	
-	public int battle(char left, char right)
+	public void test ()
+	{
+		Discard.add(Lpile1.draw());
+	}
+	
+	public String victor(String left, String right)
+	{
+		String result = "";
+		char Ltemp = left.charAt(0);
+		char Rtemp = right.charAt(0);
+		int outcome = battle(Ltemp, Rtemp);
+		
+		if(outcome == 1)
+		{
+			result = "Left";
+		}
+		else if (outcome == 2)
+		{
+			result = "Right";
+		}
+		else if (outcome == 3)
+		{
+			result = "Tie";
+		}
+		else
+		{
+			result = "what?";
+		}
+		
+		return result;
+	}
+	
+	private int battle(char left, char right)
 	{
 		int outcome = 0;
 		
@@ -230,6 +281,8 @@ public class Controller
 				outcome = 1;
 			}
 			break;
+		default:
+			outcome = 4;
 		}
 		
 		return outcome;

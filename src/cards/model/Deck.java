@@ -97,15 +97,20 @@ public class Deck
 	
 	private void take()
 	{
-		this.contents.remove(this.contents.size() - 1);
+		if(this.contents.size() > 0)
+			{
+			this.contents.remove(this.contents.size() - 1);
+			}
 	}
 	
 	public String peek()
 	{
 		String check = "";
 		
+		if(this.contents.size() > 0)
+		{
 		check = this.contents.get(this.contents.size() - 1);
-		
+		}
 		return check;
 	}
 	
