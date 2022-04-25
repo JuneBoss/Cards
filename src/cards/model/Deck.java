@@ -9,7 +9,11 @@ public class Deck
 	private Boolean empty;
 	private ArrayList<String> contents;
 
-	
+	/**
+	 * Initializes a deck of cards based on two parameters
+	 * @param empty - determines if the deck holds any cards
+	 * @param jokers - determines if the deck possesses the two Joker cards, if empty is true this parameter has no effect
+	 */
 	public Deck(Boolean empty, Boolean jokers)//the first parameter determines if the deck has cards, if true then the second determines if there is jokers among them
 	{
 		if(empty)
@@ -42,16 +46,27 @@ public class Deck
 		}
 	}
 	
+	/**
+	 * Returns the contents of the deck
+	 * @return
+	 */
 	public ArrayList<String> getContents()
 	{	
 		return this.contents;
 	}
 	
+	/**
+	 * Shuffles the contents of the deck
+	 */
 	public void shuffle()
 	{
 		Collections.shuffle(this.contents);
 	}
 	
+	/**
+	 * returns a card as a string and removes it
+	 * @return
+	 */
 	public String draw()
 	{
 		String card = "";
@@ -62,6 +77,11 @@ public class Deck
 		return card;
 	}
 	
+	/**
+	 * returns a number of cards and removes them
+	 * @param number - the number of cards drawn
+	 * @return
+	 */
 	public ArrayList<String> draw(int number)
 	{
 		ArrayList<String> cards = new ArrayList <String>();
@@ -82,11 +102,19 @@ public class Deck
 		return cards;
 	}
 	
+	/**
+	 * adds a card to the deck
+	 * @param card - the value added as the card
+	 */
 	public void add(String card)
 	{
 		this.contents.add(card);
 	}
 	
+	/**
+	 * adds multiple cards to the deck
+	 * @param cards - the values added as cards
+	 */
 	public void add(ArrayList<String> cards)
 	{
 		for(int index = 0; index < cards.size(); index++)
@@ -95,6 +123,9 @@ public class Deck
 		}
 	}
 	
+	/**
+	 * removes a card from the deck
+	 */
 	private void take()
 	{
 		if(this.contents.size() > 0)
@@ -103,6 +134,10 @@ public class Deck
 			}
 	}
 	
+	/**
+	 * returns the string from the topmost card from the deck
+	 * @return
+	 */
 	public String peek()
 	{
 		String check = "";
@@ -114,6 +149,10 @@ public class Deck
 		return check;
 	}
 	
+	/**
+	 * removes half the cards in a given deck and returns them as an arrayList
+	 * @return
+	 */
 	public ArrayList<String> split()
 	{
 		ArrayList<String> half = new ArrayList<String>();
@@ -128,6 +167,10 @@ public class Deck
 		return half;
 	}
 	
+	/**
+	 * displays the number of cards in a deck
+	 * @return
+	 */
 	public int checkSize()
 	{
 		int size = 0;

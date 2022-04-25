@@ -57,15 +57,17 @@ public class Controller
 		System.out.println(victor(Lpile2.peek(), Rpile2.peek()));
 		System.out.println(victor(Lpile3.peek(), Rpile3.peek()));
 		
-		test();
+		
 		System.out.println(Discard.peek());
 	}
 	
-	public void test ()
-	{
-		Discard.add(Lpile1.draw());
-	}
 	
+	/**
+	 * Takes two strings and uses the result of the battle method to return a string describing the outcome
+	 * @param left
+	 * @param right
+	 * @return returns left, right, or tie based on the result of the battle
+	 */
 	public String victor(String left, String right)
 	{
 		String result = "";
@@ -93,6 +95,12 @@ public class Controller
 		return result;
 	}
 	
+	/**
+	 * Takes two chars and derives an outcome based on a switch statement
+	 * @param left
+	 * @param right
+	 * @return Returns an int of 1, 2, or 3 based on the results
+	 */
 	private int battle(char left, char right)
 	{
 		int outcome = 0;
