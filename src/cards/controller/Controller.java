@@ -1,8 +1,8 @@
 package cards.controller;
 
-
-
 import cards.model.Deck;
+import java.util.Scanner;
+
 public class Controller
 {
 
@@ -15,7 +15,8 @@ public class Controller
 	private Deck Rpile2;
 	private Deck Lpile3;
 	private Deck Rpile3;
-	
+	private Deck Choice;
+	private Scanner input;
 	
 	public Controller()
 	{
@@ -29,38 +30,180 @@ public class Controller
 	this.Rpile2 = new Deck(true, false);
 	this.Lpile3 = new Deck(true, false);
 	this.Rpile3 = new Deck(true, false);
-		
+	this.Choice = new Deck(true, false);
+	this.input = new Scanner(System.in);
 	}
 	
 	public void start()
 	{
+		Boolean over = false;
 		Ldeck.shuffle();
 		Rdeck.add(Ldeck.split());
 		System.out.println(Ldeck.getContents());
 		System.out.println(Rdeck.getContents());
 		
-		Lpile1.add(Ldeck.draw());
-		Rpile1.add(Rdeck.draw());
-		Lpile2.add(Ldeck.draw());
-		Rpile2.add(Rdeck.draw());
-		Lpile3.add(Ldeck.draw());
-		Rpile3.add(Rdeck.draw());
-		
-		System.out.print("Left 1: " + Lpile1.getContents());
-		System.out.println(" Right 1: " + Rpile1.getContents());
-		System.out.print("Left 2: " + Lpile2.getContents());
-		System.out.println(" Right 2: " + Rpile2.getContents());
-		System.out.print("Left 3: " + Lpile3.getContents());
-		System.out.println(" Right 3: " + Rpile3.getContents());
-		
-		System.out.println(victor(Lpile1.peek(), Rpile1.peek()));
-		System.out.println(victor(Lpile2.peek(), Rpile2.peek()));
-		System.out.println(victor(Lpile3.peek(), Rpile3.peek()));
+		while(!over)
+		{
+			placement();
+		}
 		
 		
-		System.out.println(Discard.peek());
+		
+	}
+	public void display()
+	{
+		String one = "";
+		String two = "";
+		String three = "";
+		
+		one = "Left 1 : " + Lpile1.getContents() + " Right 1 : " + Rpile1.getContents();
+		two = "Left 2 : " + Lpile2.getContents() + " Right 2 : " + Rpile2.getContents();
+		one = "Left 3 : " + Lpile3.getContents() + " Right 3 : " + Rpile3.getContents();
+		
+		System.out.println(one);
+		System.out.println(two);
+		System.out.println(three);
 	}
 	
+	public void emptyPlace()
+	{
+		if(Lpile1.checkSize() != 0)
+		{
+			Lpile1.add("XX");
+		}
+		else if(Lpile2.checkSize() != 0)
+		{
+			Lpile2.add("XX");
+		}
+		else if (Lpile3.checkSize() != 0)
+		{
+			Lpile3.add("XX");
+		}
+	}
+	
+	public void placement()
+	{
+		if(Rpile1.checkSize() != 0)
+		{
+			if(Rdeck.checkSize() == 0)
+			{
+				Rpile1.add("XX");
+			}
+			else
+			{
+			Rpile1.add(Rdeck.draw());
+			}
+		}
+		
+		if(Lpile1.checkSize() != 0 || Lpile2.checkSize() != 0 || Lpile3.checkSize() != 0)
+		{
+			if(Ldeck.checkSize() == 0)
+			{
+				emptyPlace();
+			}
+			else
+			{
+			display();
+			cardSelect(Ldeck.draw());
+			}
+		}
+		
+		if(Rpile2.checkSize() != 0)
+		{
+			if(Rdeck.checkSize() == 0)
+			{
+				Rpile2.add("XX");
+			}
+			else
+			{
+			Rpile2.add(Rdeck.draw());
+			}
+		}
+		
+		if(Lpile1.checkSize() != 0 || Lpile2.checkSize() != 0 || Lpile3.checkSize() != 0)
+		{
+			if(Ldeck.checkSize() == 0)
+			{
+				emptyPlace();
+			}
+			else
+			{
+			display();
+			cardSelect(Ldeck.draw());
+			}
+		}
+		
+		if(Rpile3.checkSize() != 0)
+		{
+			if(Rdeck.checkSize() == 0)
+			{
+				Rpile3.add("XX");
+			}
+			else
+			{
+			Rpile3.add(Rdeck.draw());
+			}
+		}
+		
+		if(Lpile1.checkSize() != 0 || Lpile2.checkSize() != 0 || Lpile3.checkSize() != 0)
+		{
+			if(Ldeck.checkSize() == 0)
+			{
+				emptyPlace();
+			}
+			else
+			{
+			display();
+			cardSelect(Ldeck.draw());
+			}
+		}
+	}
+	
+	public void cardSelect(String card)
+	{
+		String choices = "You may place the card at ";
+		int choice = 0;
+		Boolean done = false;
+		
+		if(Lpile1.checkSize() == 0)
+		{
+			choices += "1, ";
+		}
+		if(Lpile2.checkSize() == 0)
+		{
+			choices += "2, ";
+		}
+		if(Lpile1.checkSize() == 0)
+		{
+			choices += "3";
+		}
+		
+		System.out.println(choices);
+		while(!done)
+		{
+		choice = input.nextInt();
+		
+		if(choice == 1 && Lpile1.checkSize() == 0)
+		{
+			Lpile1.add(card);
+			done = true;
+		}
+		else if (choice == 2 && Lpile2.checkSize() == 0)
+		{
+			Lpile2.add(card);
+			done = true;
+		}
+		else if (choice == 3 && Lpile3.checkSize() == 0)
+		{
+			Lpile3.add(card);
+			done = true;
+		}
+		else
+		{
+			System.out.println("Please enter an appropriate value");
+		}
+		}
+	}
 	
 	/**
 	 * Takes two strings and uses the result of the battle method to return a string describing the outcome
@@ -108,7 +251,7 @@ public class Controller
 		switch (left)
 		{
 		case '2':
-			if(right == 'A' || right == 'K' || right == 'Q')
+			if(right == 'A' || right == 'K' || right == 'Q' || right == 'X')
 			{
 				outcome = 1;
 			}
@@ -122,7 +265,7 @@ public class Controller
 			}
 			break;
 		case '3':
-			if(right == '2' || right == 'A' || right == 'K')
+			if(right == '2' || right == 'A' || right == 'K' || right == 'X')
 			{
 				outcome = 1;
 			}
@@ -136,7 +279,7 @@ public class Controller
 			}
 			break;
 		case '4':
-			if(right == '2' || right == '3' || right == 'A')
+			if(right == '2' || right == '3' || right == 'A' || right == 'X')
 			{
 				outcome = 1;
 			}
@@ -150,7 +293,7 @@ public class Controller
 			}
 			break;
 		case '5':
-			if(right == '2' || right == '3' || right == '4')
+			if(right == '2' || right == '3' || right == '4' || right == 'X')
 			{
 				outcome = 1;
 			}
@@ -164,7 +307,7 @@ public class Controller
 			}
 			break;
 		case '6':
-			if(right == '2' || right == '3' || right == '4' || right == '5')
+			if(right == '2' || right == '3' || right == '4' || right == '5' || right == 'X')
 			{
 				outcome = 1;
 			}
@@ -178,7 +321,7 @@ public class Controller
 			}
 			break;
 		case '7':
-			if(right == '2' || right == '3' || right == '4' || right == '5' || right == '6')
+			if(right == '2' || right == '3' || right == '4' || right == '5' || right == '6' || right == 'X')
 			{
 				outcome = 1;
 			}
@@ -192,7 +335,7 @@ public class Controller
 			}
 			break;
 		case '8':
-			if(right == '2' || right == '3' || right == '4' || right == '5' || right == '6' || right == '7')
+			if(right == '2' || right == '3' || right == '4' || right == '5' || right == '6' || right == '7' || right == 'X')
 			{
 				outcome = 1;
 			}
@@ -287,6 +430,16 @@ public class Controller
 			else
 			{
 				outcome = 1;
+			}
+			break;
+		case 'X':
+			if(right == 'X')
+			{
+				outcome = 3;
+			}
+			else
+			{
+				outcome = 2;
 			}
 			break;
 		default:
