@@ -45,11 +45,84 @@ public class Controller
 		while(!over)
 		{
 			placement();
+			removal();
+			
+			System.out.println("left has " + Ldeck.checkSize() + " cards remaining");
+			System.out.println("right has " + Rdeck.checkSize() + " cards remaining");
+			
+			if(Ldeck.checkSize() == 0 && Lpile1.peek() == "XX" && Lpile2.peek() == "XX" && Lpile3.peek() == "XX")
+			{
+				System.out.println("Right wins, better luck next time");
+				over = true;
+			}
+			else if(Rdeck.checkSize() == 0 && Rpile1.peek() == "XX" && Rpile2.peek() == "XX" && Rpile3.peek() == "XX")
+			{
+				System.out.println("Left wins, good job");
+				over = true;
+			}
 		}
 		
 		
 		
 	}
+	
+	public void removal()
+	{
+		String round1 = victor(Lpile1.peek(), Rpile1.peek());
+		String round2 = victor(Lpile2.peek(), Rpile2.peek());
+		String round3 = victor(Lpile3.peek(), Rpile3.peek());
+		if(round1 == "Left")
+		{
+			Discard.add(Rpile1.draw());
+			System.out.println("Left wins row 1");
+		}
+		else if (round1 == "Right")
+		{
+			Discard.add(Lpile1.draw());
+			System.out.println("Right wins row 1");
+		}
+		else if (round1 == "Tie")
+		{
+			Discard.add(Lpile1.draw());
+			Discard.add(Rpile1.draw());
+			System.out.println("Its a tie, they both die");
+		}
+		
+		if(round2 == "Left")
+		{
+			Discard.add(Rpile2.draw());
+			System.out.println("Left wins row 2");
+		}
+		else if (round2 == "Right")
+		{
+			Discard.add(Lpile2.draw());
+			System.out.println("Right wins row 2");
+		}
+		else if (round2 == "Tie")
+		{
+			Discard.add(Lpile2.draw());
+			Discard.add(Rpile2.draw());
+			System.out.println("Its a tie, they both die");
+		}
+		
+		if(round3 == "Left")
+		{
+			Discard.add(Rpile3.draw());
+			System.out.println("Left wins row 3");
+		}
+		else if (round3 == "Right")
+		{
+			Discard.add(Lpile3.draw());
+			System.out.println("Right wins row 3");
+		}
+		else if (round3 == "Tie")
+		{
+			Discard.add(Lpile3.draw());
+			Discard.add(Rpile3.draw());
+			System.out.println("Its a tie, they both die");
+		}
+	}
+	
 	public void display()
 	{
 		String one = "";
@@ -58,7 +131,7 @@ public class Controller
 		
 		one = "Left 1 : " + Lpile1.getContents() + " Right 1 : " + Rpile1.getContents();
 		two = "Left 2 : " + Lpile2.getContents() + " Right 2 : " + Rpile2.getContents();
-		one = "Left 3 : " + Lpile3.getContents() + " Right 3 : " + Rpile3.getContents();
+		three = "Left 3 : " + Lpile3.getContents() + " Right 3 : " + Rpile3.getContents();
 		
 		System.out.println(one);
 		System.out.println(two);
@@ -83,7 +156,7 @@ public class Controller
 	
 	public void placement()
 	{
-		if(Rpile1.checkSize() != 0)
+		if(Rpile1.checkSize() == 0)
 		{
 			if(Rdeck.checkSize() == 0)
 			{
@@ -95,7 +168,7 @@ public class Controller
 			}
 		}
 		
-		if(Lpile1.checkSize() != 0 || Lpile2.checkSize() != 0 || Lpile3.checkSize() != 0)
+		if(Lpile1.checkSize() == 0 || Lpile2.checkSize() == 0 || Lpile3.checkSize() == 0)
 		{
 			if(Ldeck.checkSize() == 0)
 			{
@@ -108,7 +181,7 @@ public class Controller
 			}
 		}
 		
-		if(Rpile2.checkSize() != 0)
+		if(Rpile2.checkSize() == 0)
 		{
 			if(Rdeck.checkSize() == 0)
 			{
@@ -120,7 +193,7 @@ public class Controller
 			}
 		}
 		
-		if(Lpile1.checkSize() != 0 || Lpile2.checkSize() != 0 || Lpile3.checkSize() != 0)
+		if(Lpile1.checkSize() == 0 || Lpile2.checkSize() == 0 || Lpile3.checkSize() == 0)
 		{
 			if(Ldeck.checkSize() == 0)
 			{
@@ -133,7 +206,7 @@ public class Controller
 			}
 		}
 		
-		if(Rpile3.checkSize() != 0)
+		if(Rpile3.checkSize() == 0)
 		{
 			if(Rdeck.checkSize() == 0)
 			{
@@ -145,7 +218,7 @@ public class Controller
 			}
 		}
 		
-		if(Lpile1.checkSize() != 0 || Lpile2.checkSize() != 0 || Lpile3.checkSize() != 0)
+		if(Lpile1.checkSize() == 0 || Lpile2.checkSize() == 0 || Lpile3.checkSize() == 0)
 		{
 			if(Ldeck.checkSize() == 0)
 			{
@@ -161,7 +234,7 @@ public class Controller
 	
 	public void cardSelect(String card)
 	{
-		String choices = "You may place the card at ";
+		String choices = "You may place the card " + Ldeck.peek() + " at ";
 		int choice = 0;
 		Boolean done = false;
 		
@@ -173,7 +246,7 @@ public class Controller
 		{
 			choices += "2, ";
 		}
-		if(Lpile1.checkSize() == 0)
+		if(Lpile3.checkSize() == 0)
 		{
 			choices += "3";
 		}
