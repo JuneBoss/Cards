@@ -234,7 +234,7 @@ public class Controller
 	
 	public void cardSelect(String card)
 	{
-		String choices = "You may place the card " + Ldeck.peek() + " at ";
+		String choices = "You may place the card " + card + " at ";
 		int choice = 0;
 		Boolean done = false;
 		
