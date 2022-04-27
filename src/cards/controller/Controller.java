@@ -140,17 +140,55 @@ public class Controller
 	
 	public void emptyPlace()
 	{
-		if(Lpile1.checkSize() != 0)
+		if(Lpile1.checkSize() == 0)
 		{
 			Lpile1.add("XX");
+			if(Rpile1.checkSize() != 0)
+			{
+				if(Rpile1.peek() != "XX")
+				{
+					Rdeck.add(Rpile1.draw());
+					Rpile1.add("XX");
+				}
+			}
+			else if (Rpile1.checkSize() == 0)
+			{
+				Rpile1.add("XX");
+			}
 		}
-		else if(Lpile2.checkSize() != 0)
+		
+		else if(Lpile2.checkSize() == 0)
 		{
 			Lpile2.add("XX");
+			if(Rpile2.checkSize() != 0)
+			{
+				if(Rpile2.peek() != "XX")
+				{
+					Rdeck.add(Rpile2.draw());
+					Rpile2.add("XX");
+				}
+			}
+			else if (Rpile2.checkSize() == 0)
+			{
+				Rpile2.add("XX");
+			}
 		}
-		else if (Lpile3.checkSize() != 0)
+		
+		else if (Lpile3.checkSize() == 0)
 		{
 			Lpile3.add("XX");
+			if(Rpile3.checkSize() != 0)
+			{
+				if(Rpile3.peek() != "XX")
+				{
+					Rdeck.add(Rpile3.draw());
+					Rpile3.add("XX");
+				}
+			}
+			else if (Rpile3.checkSize() == 0)
+			{
+				Rpile3.add("XX");
+			}
 		}
 	}
 	
@@ -161,6 +199,18 @@ public class Controller
 			if(Rdeck.checkSize() == 0)
 			{
 				Rpile1.add("XX");
+				if(Lpile1.checkSize() != 0)
+				{
+					if(Lpile1.peek() != "XX")
+					{
+						Ldeck.add(Lpile1.draw());
+						Lpile1.add("XX");
+					}
+				}
+				else if (Lpile1.checkSize() == 0)
+				{
+					Lpile1.add("XX");
+				}
 			}
 			else
 			{
@@ -186,6 +236,18 @@ public class Controller
 			if(Rdeck.checkSize() == 0)
 			{
 				Rpile2.add("XX");
+				if(Lpile2.checkSize() != 0)
+				{
+					if(Lpile2.peek() != "XX")
+					{
+						Ldeck.add(Lpile2.draw());
+						Lpile2.add("XX");
+					}
+				}
+				else if (Lpile2.checkSize() == 0)
+				{
+					Lpile2.add("XX");
+				}
 			}
 			else
 			{
@@ -211,6 +273,18 @@ public class Controller
 			if(Rdeck.checkSize() == 0)
 			{
 				Rpile3.add("XX");
+				if(Lpile3.checkSize() != 0)
+				{
+					if(Lpile3.peek() != "XX")
+					{
+						Ldeck.add(Lpile3.draw());
+						Lpile3.add("XX");
+					}
+				}
+				else if (Lpile3.checkSize() == 0)
+				{
+					Lpile3.add("XX");
+				}
 			}
 			else
 			{
@@ -324,7 +398,7 @@ public class Controller
 		switch (left)
 		{
 		case '2':
-			if(right == 'A' || right == 'K' || right == 'Q' || right == 'X')
+			if(right == 'A' || right == 'K' || right == 'Q')
 			{
 				outcome = 1;
 			}
@@ -332,13 +406,17 @@ public class Controller
 			{
 				outcome = 3;
 			}
+			else if (right == 'X')
+			{
+				outcome = 4;
+			}
 			else
 			{
 				outcome = 2;
 			}
 			break;
 		case '3':
-			if(right == '2' || right == 'A' || right == 'K' || right == 'X')
+			if(right == '2' || right == 'A' || right == 'K')
 			{
 				outcome = 1;
 			}
@@ -346,13 +424,17 @@ public class Controller
 			{
 				outcome = 3;
 			}
+			else if (right == 'X')
+			{
+				outcome = 4;
+			}
 			else
 			{
 				outcome = 2;
 			}
 			break;
 		case '4':
-			if(right == '2' || right == '3' || right == 'A' || right == 'X')
+			if(right == '2' || right == '3' || right == 'A')
 			{
 				outcome = 1;
 			}
@@ -360,13 +442,17 @@ public class Controller
 			{
 				outcome = 3;
 			}
+			else if (right == 'X')
+			{
+				outcome = 4;
+			}
 			else
 			{
 				outcome = 2;
 			}
 			break;
 		case '5':
-			if(right == '2' || right == '3' || right == '4' || right == 'X')
+			if(right == '2' || right == '3' || right == '4')
 			{
 				outcome = 1;
 			}
@@ -374,13 +460,17 @@ public class Controller
 			{
 				outcome = 3;
 			}
+			else if (right == 'X')
+			{
+				outcome = 4;
+			}
 			else
 			{
 				outcome = 2;
 			}
 			break;
 		case '6':
-			if(right == '2' || right == '3' || right == '4' || right == '5' || right == 'X')
+			if(right == '2' || right == '3' || right == '4' || right == '5')
 			{
 				outcome = 1;
 			}
@@ -388,13 +478,17 @@ public class Controller
 			{
 				outcome = 3;
 			}
+			else if (right == 'X')
+			{
+				outcome = 4;
+			}
 			else
 			{
 				outcome = 2;
 			}
 			break;
 		case '7':
-			if(right == '2' || right == '3' || right == '4' || right == '5' || right == '6' || right == 'X')
+			if(right == '2' || right == '3' || right == '4' || right == '5' || right == '6')
 			{
 				outcome = 1;
 			}
@@ -402,19 +496,27 @@ public class Controller
 			{
 				outcome = 3;
 			}
+			else if (right == 'X')
+			{
+				outcome = 4;
+			}
 			else
 			{
 				outcome = 2;
 			}
 			break;
 		case '8':
-			if(right == '2' || right == '3' || right == '4' || right == '5' || right == '6' || right == '7' || right == 'X')
+			if(right == '2' || right == '3' || right == '4' || right == '5' || right == '6' || right == '7')
 			{
 				outcome = 1;
 			}
 			else if(right == '8')
 			{
 				outcome = 3;
+			}
+			else if (right == 'X')
+			{
+				outcome = 4;
 			}
 			else
 			{
@@ -430,6 +532,10 @@ public class Controller
 			{
 				outcome = 3;
 			}
+			else if (right == 'X')
+			{
+				outcome = 4;
+			}
 			else
 			{
 				outcome = 1;
@@ -443,6 +549,10 @@ public class Controller
 			else if(right == '1')
 			{
 				outcome = 3;
+			}
+			else if (right == 'X')
+			{
+				outcome = 4;
 			}
 			else
 			{
@@ -458,6 +568,10 @@ public class Controller
 			{
 				outcome = 3;
 			}
+			else if (right == 'X')
+			{
+				outcome = 4;
+			}
 			else
 			{
 				outcome = 1;
@@ -471,6 +585,10 @@ public class Controller
 			else if(right == 'Q')
 			{
 				outcome = 3;
+			}
+			else if (right == 'X')
+			{
+				outcome = 4;
 			}
 			else
 			{
@@ -486,6 +604,10 @@ public class Controller
 			{
 				outcome = 3;
 			}
+			else if (right == 'X')
+			{
+				outcome = 4;
+			}
 			else
 			{
 				outcome = 1;
@@ -500,20 +622,17 @@ public class Controller
 			{
 				outcome = 3;
 			}
+			else if (right == 'X')
+			{
+				outcome = 4;
+			}
 			else
 			{
 				outcome = 1;
 			}
 			break;
 		case 'X':
-			if(right == 'X')
-			{
-				outcome = 3;
-			}
-			else
-			{
-				outcome = 2;
-			}
+			outcome = 4;
 			break;
 		default:
 			outcome = 4;
