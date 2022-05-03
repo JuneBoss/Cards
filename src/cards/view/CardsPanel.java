@@ -31,18 +31,18 @@ public class CardsPanel extends JPanel
 		private JButton Lfield1;
 		private JButton Lfield2;
 		private JButton Lfield3;
-		private ImageIcon Lpic1;
 		private JLabel Llabel1;
-		private ImageIcon Lpic2;
 		private JLabel Llabel2;
-		private ImageIcon Lpic3;
 		private JLabel Llabel3;
-		private ImageIcon Rpic1;
 		private JLabel Rlabel1;
-		private ImageIcon Rpic2;
 		private JLabel Rlabel2;
-		private ImageIcon Rpic3;
 		private JLabel Rlabel3;
+		private JLabel Ldeck;
+		private JLabel Rdeck;
+		private JButton start;
+		private JButton next;
+		private JLabel discard;
+		private ImageIcon picture;
 		
 
 	public CardsPanel(Controller app)
@@ -52,43 +52,150 @@ public class CardsPanel extends JPanel
 		
 		this.layout = new SpringLayout();
 		this.leftPanel = new JPanel();
+		
 		this.rightPanel = new JPanel();
+		
 		this.Lfield1 = new JButton("L1");
 		this.Lfield2 = new JButton("L2");
 		this.Lfield3 = new JButton("L3");
-		this.Lpic1 = new ImageIcon();
-		this.Llabel1 = new JLabel("Llabel1");
-		this.Lpic2 = new ImageIcon();
-		this.Llabel2 = new JLabel("Llabel2");
-		this.Lpic3 = new ImageIcon();
-		this.Llabel3 = new JLabel("Llabel3");
-		this.Rpic1 = new ImageIcon();
-		this.Rlabel1 = new JLabel("Rlabel1");
-		this.Rpic2 = new ImageIcon();
-		this.Rlabel2  = new JLabel("Rlabel2");
-		this.Rpic3 = new ImageIcon();
-		this.Rlabel3 = new JLabel("Rlabel3");
+		this.Llabel1 = new JLabel("");
+		this.Llabel2 = new JLabel("");
+		this.Llabel3 = new JLabel("");
+		this.Rlabel1 = new JLabel("");
+		this.Rlabel2  = new JLabel("");
+		this.Rlabel3 = new JLabel("");
+		this.Ldeck = new JLabel("");
+		this.Rdeck = new JLabel("");
+		this.start = new JButton("Start Game");
+		
+		this.next = new JButton("put steps here");
+		
+
+		this.discard = new JLabel("");
+		this.picture = new ImageIcon();
 		
 		setupPanel();
 		setupListeners();
 		setupLayout();
 	}
 	
-	private void updateDisplay(String name)
+	private void updateDisplay(String name, String target)
 	{
 		String path = "/cards/view/Card_Images/";
 		String defaultName = "CardBack";
 		String extension = ".png";
 		
+		if(target == "L1")
+		{
 		try
 		{
-			Lpic1 = new ImageIcon(getClass().getResource(path + name + extension));
+			picture = new ImageIcon(getClass().getResource(path + name + extension));
 		}
 		catch (NullPointerException missingFile)
 		{
-			Lpic1 = new ImageIcon(getClass().getResource(path + defaultName + extension));
+			picture = new ImageIcon(getClass().getResource(path + defaultName + extension));
 		}
-		Llabel1.setIcon(Lpic1);
+		Llabel1.setIcon(picture);
+		Lfield1.setVisible(false);
+		}
+		else if(target == "L2")
+		{
+		try
+		{
+			picture = new ImageIcon(getClass().getResource(path + name + extension));
+		}
+		catch (NullPointerException missingFile)
+		{
+			picture = new ImageIcon(getClass().getResource(path + defaultName + extension));
+		}
+		Llabel2.setIcon(picture);
+		Lfield2.setVisible(false);
+		}
+		else if(target == "L3")
+		{
+		try
+		{
+			picture = new ImageIcon(getClass().getResource(path + name + extension));
+		}
+		catch (NullPointerException missingFile)
+		{
+			picture = new ImageIcon(getClass().getResource(path + defaultName + extension));
+		}
+		Llabel3.setIcon(picture);
+		Lfield3.setVisible(false);
+		}
+		else if(target == "LD")
+		{
+		try
+		{
+			picture = new ImageIcon(getClass().getResource(path + name + extension));
+		}
+		catch (NullPointerException missingFile)
+		{
+			picture = new ImageIcon(getClass().getResource(path + defaultName + extension));
+		}
+		Ldeck.setIcon(picture);
+		}
+		else if(target == "R1")
+		{
+		try
+		{
+			picture = new ImageIcon(getClass().getResource(path + name + extension));
+		}
+		catch (NullPointerException missingFile)
+		{
+			picture = new ImageIcon(getClass().getResource(path + defaultName + extension));
+		}
+		Rlabel1.setIcon(picture);
+		}
+		else if(target == "R2")
+		{
+		try
+		{
+			picture = new ImageIcon(getClass().getResource(path + name + extension));
+		}
+		catch (NullPointerException missingFile)
+		{
+			picture = new ImageIcon(getClass().getResource(path + defaultName + extension));
+		}
+		Rlabel2.setIcon(picture);
+		}
+		else if(target == "R3")
+		{
+		try
+		{
+			picture = new ImageIcon(getClass().getResource(path + name + extension));
+		}
+		catch (NullPointerException missingFile)
+		{
+			picture = new ImageIcon(getClass().getResource(path + defaultName + extension));
+		}
+		Rlabel3.setIcon(picture);
+		}
+		else if(target == "RD")
+		{
+		try
+		{
+			picture = new ImageIcon(getClass().getResource(path + name + extension));
+		}
+		catch (NullPointerException missingFile)
+		{
+			picture = new ImageIcon(getClass().getResource(path + defaultName + extension));
+		}
+		Rdeck.setIcon(picture);
+		}
+		else if(target == "DC")
+		{
+		try
+		{
+			picture = new ImageIcon(getClass().getResource(path + name + extension));
+		}
+		catch (NullPointerException missingFile)
+		{
+			picture = new ImageIcon(getClass().getResource(path + defaultName + extension));
+		}
+		discard.setIcon(picture);
+		}
 	}
 
 	private void setupPanel()
@@ -97,20 +204,53 @@ public class CardsPanel extends JPanel
 		this.setPreferredSize(new Dimension(800, 600));
 		this.setBackground(new Color(54, 89, 74));
 		
-		leftPanel.add(Lfield1);
-		leftPanel.add(Lfield2);
-		leftPanel.add(Lfield3);
-		leftPanel.add(Llabel1);
 		
+		leftPanel.add(Lfield1);
+		leftPanel.add(Llabel1);
+		leftPanel.add(Lfield2);
+		leftPanel.add(Llabel2);
+		leftPanel.add(Lfield3);
+		leftPanel.add(Llabel3);
+		
+		rightPanel.add(Rlabel1);
+		rightPanel.add(Rlabel2);
+		rightPanel.add(Rlabel3);
+		
+		this.add(start);
+		this.add(next);
+		this.add(Ldeck);
+		this.add(Rdeck);
+		this.add(discard);
+		
+		updateDisplay("", "LD");
+		updateDisplay("", "RD");
+		updateDisplay("", "DC");
+		
+		this.add(rightPanel);
 		this.add(leftPanel);
 	}
 
 	private void setupListeners()
 	{
+		Lfield1.addActionListener(click -> updateDisplay("1S", "L1"));
+		Lfield2.addActionListener(click -> updateDisplay("KH", "L2"));
+		Lfield3.addActionListener(click -> updateDisplay("KH", "L3"));
+		
 	}
 
 	private void setupLayout()
 	{
-		
+		layout.putConstraint(SpringLayout.NORTH, leftPanel, 40, SpringLayout.NORTH, this);
+		layout.putConstraint(SpringLayout.WEST, leftPanel, 150, SpringLayout.WEST, this);
+		layout.putConstraint(SpringLayout.SOUTH, leftPanel, -40, SpringLayout.SOUTH, this);
+		layout.putConstraint(SpringLayout.EAST, leftPanel, -500, SpringLayout.EAST, this);
+		layout.putConstraint(SpringLayout.NORTH, rightPanel, 0, SpringLayout.NORTH, leftPanel);
+		layout.putConstraint(SpringLayout.WEST, rightPanel, 500, SpringLayout.WEST, this);
+		layout.putConstraint(SpringLayout.SOUTH, rightPanel, 0, SpringLayout.SOUTH, leftPanel);
+		layout.putConstraint(SpringLayout.EAST, rightPanel, -150, SpringLayout.EAST, this);
+		layout.putConstraint(SpringLayout.WEST, start, 300, SpringLayout.WEST, this);
+		layout.putConstraint(SpringLayout.SOUTH, start, 0, SpringLayout.SOUTH, this);
+		layout.putConstraint(SpringLayout.SOUTH, next, 0, SpringLayout.SOUTH, this);
+		layout.putConstraint(SpringLayout.WEST, next, 410, SpringLayout.WEST, this);
 	}
 }

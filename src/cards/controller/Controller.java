@@ -2,6 +2,7 @@ package cards.controller;
 
 import cards.model.Deck;
 import java.util.Scanner;
+import cards.view.CardsFrame;
 
 public class Controller
 {
@@ -17,6 +18,7 @@ public class Controller
 	private Deck Rpile3;
 	private Deck Choice;
 	private Scanner input;
+	private CardsFrame frame;
 	
 	public Controller()
 	{
@@ -32,6 +34,7 @@ public class Controller
 	this.Rpile3 = new Deck(true, false);
 	this.Choice = new Deck(true, false);
 	this.input = new Scanner(System.in);
+	this.frame = new CardsFrame(this);
 	}
 	
 	public void start()
@@ -41,7 +44,7 @@ public class Controller
 		Rdeck.add(Ldeck.split());
 		System.out.println(Ldeck.getContents());
 		System.out.println(Rdeck.getContents());
-		
+		/*
 		while(!over)
 		{
 			placement();
@@ -61,7 +64,7 @@ public class Controller
 				over = true;
 			}
 		}
-		
+		*/
 		
 		
 	}
