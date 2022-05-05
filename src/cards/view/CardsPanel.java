@@ -132,6 +132,21 @@ public class CardsPanel extends JPanel
 		return card;
 	}
 	
+	private void fillBoard()
+	{
+		while(!app.boardFull()) 
+		{
+			if(!app.leftFull()) 
+			{
+				
+			}
+			if(!app.rightFull())
+			{
+				
+			}
+		}
+	}
+	
 	private void updateDisplay(String name, String target)
 	{
 		String path = "/cards/view/Card_Images/";

@@ -213,6 +213,62 @@ public class Controller
 		}
 	}
 	
+	public boolean boardFull()
+	{
+		boolean full = true;
+		
+		if(!leftFull())
+		{
+			full = false;
+		}
+		if(!rightFull())
+		{
+			full = false;
+		}
+		
+		return full;
+	}
+	
+	public boolean leftFull()
+	{
+		boolean full = true;
+		
+		if(Lpile1.checkSize() == 0)
+		{
+			full = false;
+		}
+		if(Lpile2.checkSize() == 0)
+		{
+			full = false;
+		}
+		if(Lpile3.checkSize() == 0)
+		{
+			full = false;
+		}
+		
+		return full;
+	}
+	
+	public boolean rightFull()
+	{
+		boolean full = true;
+		
+		if(Rpile1.checkSize() == 0)
+		{
+			full = false;
+		}
+		if(Rpile2.checkSize() == 0)
+		{
+			full = false;
+		}
+		if(Rpile3.checkSize() == 0)
+		{
+			full = false;
+		}
+		
+		return full;
+	}
+	
 	public String placement(String pile)
 	{
 		String card = "";
