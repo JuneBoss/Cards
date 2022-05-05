@@ -67,6 +67,26 @@ public class Controller
 		
 	}
 	
+	public String checkLeft()
+	{
+		String check = "";
+		
+		if(Lpile1.checkSize() == 0)
+		{
+			check += "1";
+		}
+		if(Lpile2.checkSize() == 0)
+		{
+			check += "2";
+		}
+		if(Lpile3.checkSize() == 0)
+		{
+			check += "3";
+		}
+		
+		return check;
+	}
+	
 	public void removal()
 	{
 		String round1 = victor(Lpile1.peek(), Rpile1.peek());
@@ -193,118 +213,39 @@ public class Controller
 		}
 	}
 	
-	public void placement()
+	public String placement(String pile)
 	{
-		if(Rpile1.checkSize() == 0)
+		String card = "";
+		
+		switch(pile)
 		{
-			if(Rdeck.checkSize() == 0)
-			{
-				Rpile1.add("XX");
-				if(Lpile1.checkSize() != 0)
-				{
-					if(Lpile1.peek() != "XX")
-					{
-						Ldeck.add(Lpile1.draw());
-						Lpile1.add("XX");
-					}
-				}
-				else if (Lpile1.checkSize() == 0)
-				{
-					Lpile1.add("XX");
-				}
-			}
-			else
-			{
+		case "L1":
+			card = Ldeck.peek();
+			Lpile1.add(Ldeck.draw());
+			break;
+		case "L2":
+			card = Ldeck.peek();
+			Lpile2.add(Ldeck.draw());
+			break;
+		case "L3":
+			card = Ldeck.peek();
+			Lpile3.add(Ldeck.draw());
+			break;
+		case "R1":
+			card = Rdeck.peek();
 			Rpile1.add(Rdeck.draw());
-			}
-		}
-		
-		if(Lpile1.checkSize() == 0 || Lpile2.checkSize() == 0 || Lpile3.checkSize() == 0)
-		{
-			if(Ldeck.checkSize() == 0)
-			{
-				emptyPlace();
-			}
-			else
-			{
-			display();
-			cardSelect(Ldeck.draw());
-			}
-		}
-		
-		if(Rpile2.checkSize() == 0)
-		{
-			if(Rdeck.checkSize() == 0)
-			{
-				Rpile2.add("XX");
-				if(Lpile2.checkSize() != 0)
-				{
-					if(Lpile2.peek() != "XX")
-					{
-						Ldeck.add(Lpile2.draw());
-						Lpile2.add("XX");
-					}
-				}
-				else if (Lpile2.checkSize() == 0)
-				{
-					Lpile2.add("XX");
-				}
-			}
-			else
-			{
+			break;
+		case "R2":
+			card = Rdeck.peek();
 			Rpile2.add(Rdeck.draw());
-			}
-		}
-		
-		if(Lpile1.checkSize() == 0 || Lpile2.checkSize() == 0 || Lpile3.checkSize() == 0)
-		{
-			if(Ldeck.checkSize() == 0)
-			{
-				emptyPlace();
-			}
-			else
-			{
-			display();
-			cardSelect(Ldeck.draw());
-			}
-		}
-		
-		if(Rpile3.checkSize() == 0)
-		{
-			if(Rdeck.checkSize() == 0)
-			{
-				Rpile3.add("XX");
-				if(Lpile3.checkSize() != 0)
-				{
-					if(Lpile3.peek() != "XX")
-					{
-						Ldeck.add(Lpile3.draw());
-						Lpile3.add("XX");
-					}
-				}
-				else if (Lpile3.checkSize() == 0)
-				{
-					Lpile3.add("XX");
-				}
-			}
-			else
-			{
+			break;
+		case "R3":
+			card = Rdeck.peek();
 			Rpile3.add(Rdeck.draw());
-			}
 		}
 		
-		if(Lpile1.checkSize() == 0 || Lpile2.checkSize() == 0 || Lpile3.checkSize() == 0)
-		{
-			if(Ldeck.checkSize() == 0)
-			{
-				emptyPlace();
-			}
-			else
-			{
-			display();
-			cardSelect(Ldeck.draw());
-			}
-		}
+		return card;
+		
 	}
 	
 	public void cardSelect(String card)

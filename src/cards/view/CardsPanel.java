@@ -104,6 +104,9 @@ public class CardsPanel extends JPanel
 		Lfield1.setVisible(false);
 		Lfield2.setVisible(false);
 		Lfield3.setVisible(false);
+		
+
+		
 		next.setVisible(false);
 		
 		
@@ -113,9 +116,10 @@ public class CardsPanel extends JPanel
 
 	private void setupListeners()
 	{
-		Lfield1.addActionListener(click -> updateDisplay("2D", "L1"));
-		Lfield2.addActionListener(click -> updateDisplay("1D", "L2"));
-		Lfield3.addActionListener(click -> updateDisplay("5D", "L3"));
+		Lfield1.addActionListener(click -> updateDisplay(drawCard("L1"), "L1"));
+		Lfield2.addActionListener(click -> updateDisplay(drawCard("L2"), "L2"));
+		Lfield3.addActionListener(click -> updateDisplay(drawCard("L3"), "L3"));
+		
 		
 	}
 	
