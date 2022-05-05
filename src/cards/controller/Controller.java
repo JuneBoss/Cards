@@ -42,8 +42,6 @@ public class Controller
 		Boolean over = false;
 		Ldeck.shuffle();
 		Rdeck.add(Ldeck.split());
-		System.out.println(Ldeck.getContents());
-		System.out.println(Rdeck.getContents());
 		/*
 		while(!over)
 		{

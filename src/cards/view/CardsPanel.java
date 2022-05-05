@@ -52,9 +52,7 @@ public class CardsPanel extends JPanel
 		
 		this.layout = new SpringLayout();
 		this.leftPanel = new JPanel();
-		
 		this.rightPanel = new JPanel();
-		
 		this.Lfield1 = new JButton("L1");
 		this.Lfield2 = new JButton("L2");
 		this.Lfield3 = new JButton("L3");
@@ -67,10 +65,7 @@ public class CardsPanel extends JPanel
 		this.Ldeck = new JLabel("");
 		this.Rdeck = new JLabel("");
 		this.start = new JButton("Start Game");
-		
 		this.next = new JButton("put steps here");
-		
-
 		this.discard = new JLabel("");
 		this.picture = new ImageIcon();
 		
@@ -78,12 +73,66 @@ public class CardsPanel extends JPanel
 		setupListeners();
 		setupLayout();
 	}
+
+	private void setupPanel()
+	{
+		this.setLayout(layout);
+		this.setPreferredSize(new Dimension(800, 600));
+		this.setBackground(new Color(54, 89, 74));
+		
+		
+		leftPanel.add(Lfield1);
+		leftPanel.add(Llabel1);
+		leftPanel.add(Lfield2);
+		leftPanel.add(Llabel2);
+		leftPanel.add(Lfield3);
+		leftPanel.add(Llabel3);
+		
+		rightPanel.add(Rlabel1);
+		rightPanel.add(Rlabel2);
+		rightPanel.add(Rlabel3);
+		
+		this.add(start);
+		this.add(next);
+		this.add(Ldeck);
+		this.add(Rdeck);
+		this.add(discard);
+		
+		updateDisplay("", "LD");
+		updateDisplay("", "RD");
+		updateDisplay("", "DC");
+		Lfield1.setVisible(false);
+		Lfield2.setVisible(false);
+		Lfield3.setVisible(false);
+		next.setVisible(false);
+		
+		
+		this.add(rightPanel);
+		this.add(leftPanel);
+	}
+
+	private void setupListeners()
+	{
+		Lfield1.addActionListener(click -> updateDisplay("2D", "L1"));
+		Lfield2.addActionListener(click -> updateDisplay("1D", "L2"));
+		Lfield3.addActionListener(click -> updateDisplay("5D", "L3"));
+		
+	}
+	
+	private String drawCard(String pile)
+	{
+		String card = "";
+		
+		card = app.placement(pile);
+		
+		return card;
+	}
 	
 	private void updateDisplay(String name, String target)
 	{
 		String path = "/cards/view/Card_Images/";
 		String defaultName = "CardBack";
-		String extension = ".png";
+		String extension = ".jpeg";
 		
 		if(target == "L1")
 		{
@@ -198,46 +247,6 @@ public class CardsPanel extends JPanel
 		}
 	}
 
-	private void setupPanel()
-	{
-		this.setLayout(layout);
-		this.setPreferredSize(new Dimension(800, 600));
-		this.setBackground(new Color(54, 89, 74));
-		
-		
-		leftPanel.add(Lfield1);
-		leftPanel.add(Llabel1);
-		leftPanel.add(Lfield2);
-		leftPanel.add(Llabel2);
-		leftPanel.add(Lfield3);
-		leftPanel.add(Llabel3);
-		
-		rightPanel.add(Rlabel1);
-		rightPanel.add(Rlabel2);
-		rightPanel.add(Rlabel3);
-		
-		this.add(start);
-		this.add(next);
-		this.add(Ldeck);
-		this.add(Rdeck);
-		this.add(discard);
-		
-		updateDisplay("", "LD");
-		updateDisplay("", "RD");
-		updateDisplay("", "DC");
-		
-		this.add(rightPanel);
-		this.add(leftPanel);
-	}
-
-	private void setupListeners()
-	{
-		Lfield1.addActionListener(click -> updateDisplay("1S", "L1"));
-		Lfield2.addActionListener(click -> updateDisplay("KH", "L2"));
-		Lfield3.addActionListener(click -> updateDisplay("KH", "L3"));
-		
-	}
-
 	private void setupLayout()
 	{
 		layout.putConstraint(SpringLayout.NORTH, leftPanel, 40, SpringLayout.NORTH, this);
@@ -252,5 +261,13 @@ public class CardsPanel extends JPanel
 		layout.putConstraint(SpringLayout.SOUTH, start, 0, SpringLayout.SOUTH, this);
 		layout.putConstraint(SpringLayout.SOUTH, next, 0, SpringLayout.SOUTH, this);
 		layout.putConstraint(SpringLayout.WEST, next, 410, SpringLayout.WEST, this);
+		layout.putConstraint(SpringLayout.NORTH, Ldeck, 220, SpringLayout.NORTH, this);
+		layout.putConstraint(SpringLayout.WEST, Ldeck, 30, SpringLayout.WEST, this);
+		layout.putConstraint(SpringLayout.NORTH, Rdeck, 220, SpringLayout.NORTH, this);
+		layout.putConstraint(SpringLayout.WEST, Rdeck, 10, SpringLayout.EAST, rightPanel);
+		layout.putConstraint(SpringLayout.NORTH, discard, 220, SpringLayout.NORTH, this);
+		layout.putConstraint(SpringLayout.WEST, discard, 50, SpringLayout.EAST, leftPanel);
+		layout.putConstraint(SpringLayout.EAST, Rdeck, 0, SpringLayout.EAST, this);
+		
 	}
 }
