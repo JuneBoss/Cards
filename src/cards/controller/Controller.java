@@ -67,6 +67,18 @@ public class Controller
 		
 	}
 	
+	public int LdeckSize()
+	{
+		int size = Ldeck.checkSize();
+		return size;
+	}
+	
+	public int RdeckSize()
+	{
+		int size = Rdeck.checkSize();
+		return size;
+	}
+	
 	public String checkLeft()
 	{
 		String check = "";
@@ -80,6 +92,26 @@ public class Controller
 			check += "2";
 		}
 		if(Lpile3.checkSize() == 0)
+		{
+			check += "3";
+		}
+		
+		return check;
+	}
+	
+	public String checkRight()
+	{
+		String check = "";
+		
+		if(Rpile1.checkSize() == 0)
+		{
+			check += "1";
+		}
+		if(Rpile2.checkSize() == 0)
+		{
+			check += "2";
+		}
+		if(Rpile3.checkSize() == 0)
 		{
 			check += "3";
 		}
