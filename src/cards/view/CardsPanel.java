@@ -43,6 +43,7 @@ public class CardsPanel extends JPanel
 		private JButton next;
 		private JLabel discard;
 		private ImageIcon picture;
+		private boolean waiting;
 		
 
 	public CardsPanel(Controller app)
@@ -68,6 +69,7 @@ public class CardsPanel extends JPanel
 		this.next = new JButton("put steps here");
 		this.discard = new JLabel("");
 		this.picture = new ImageIcon();
+		this.waiting = true;
 		
 		setupPanel();
 		setupListeners();
@@ -134,18 +136,111 @@ public class CardsPanel extends JPanel
 	
 	private void fillBoard()
 	{
+		int deckSize = 0;
+		String available = "";
 		while(!app.boardFull()) 
 		{
-			if(!app.leftFull()) 
-			{
-				
-			}
 			if(!app.rightFull())
 			{
+				deckSize = app.RdeckSize();
+				available = app.checkRight();
+				if(deckSize == 0)
+				{
+					if(available.contains("1"))
+					{
+						app.emptyPlace("L1");
+						updateDisplay("XX", "L1");
+						app.emptyPlace("R1");
+						updateDisplay("XX", "R1");
+					}
+					else if (available.contains("2"))
+					{
+						app.emptyPlace("L2");
+						updateDisplay("XX", "L2");
+						app.emptyPlace("R2");
+						updateDisplay("XX", "R2");
+					}
+					else if (available.contains("3"))
+					{
+						app.emptyPlace("L3");
+						updateDisplay("XX", "L3");
+						app.emptyPlace("R3");
+						updateDisplay("XX", "R3");
+					}
+				}
+				else
+				{
+					if(available.contains("1"))
+					{
+						updateDisplay(drawCard("R1"), "R1");
+					}
+					else if (available.contains("2"))
+					{
+						updateDisplay(drawCard("R2"), "R2");
+					}
+					else if (available.contains("3"))
+					{
+						updateDisplay(drawCard("R3"), "R3");
+					}
+				}
+			}
+			if(!app.leftFull()) 
+			{
+				deckSize = app.LdeckSize();
+				available = app.checkLeft();
+				waiting = true;
+				
+				if(deckSize == 0)
+				{
+					if(available.contains("1"))
+					{
+						app.emptyPlace("L1");
+						updateDisplay("XX", "L1");
+						app.emptyPlace("R1");
+						updateDisplay("XX", "R1");
+					}
+					else if (available.contains("2"))
+					{
+						app.emptyPlace("L2");
+						updateDisplay("XX", "L2");
+						app.emptyPlace("R2");
+						updateDisplay("XX", "R2");
+					}
+					else if (available.contains("3"))
+					{
+						app.emptyPlace("L3");
+						updateDisplay("XX", "L3");
+						app.emptyPlace("R3");
+						updateDisplay("XX", "L3");
+					}
+				}
+				else
+				{
+					if(available.contains("1"))
+					{
+						Lfield1.setVisible(true);
+					}
+					if(available.contains("2"))
+					{
+						Lfield2.setVisible(true);
+					}
+					if(available.contains("3"))
+					{
+						Lfield3.setVisible(true);
+					}
+					
+					while(waiting == true)
+					{
+						
+					}
+				}
 				
 			}
+			
 		}
 	}
+	
+	
 	
 	private void updateDisplay(String name, String target)
 	{
@@ -165,6 +260,9 @@ public class CardsPanel extends JPanel
 		}
 		Llabel1.setIcon(picture);
 		Lfield1.setVisible(false);
+		Lfield2.setVisible(false);
+		Lfield3.setVisible(false);
+		waiting = false;
 		}
 		else if(target == "L2")
 		{
@@ -177,7 +275,10 @@ public class CardsPanel extends JPanel
 			picture = new ImageIcon(getClass().getResource(path + defaultName + extension));
 		}
 		Llabel2.setIcon(picture);
+		Lfield1.setVisible(false);
 		Lfield2.setVisible(false);
+		Lfield3.setVisible(false);
+		waiting = false;
 		}
 		else if(target == "L3")
 		{
@@ -190,7 +291,10 @@ public class CardsPanel extends JPanel
 			picture = new ImageIcon(getClass().getResource(path + defaultName + extension));
 		}
 		Llabel3.setIcon(picture);
+		Lfield1.setVisible(false);
+		Lfield2.setVisible(false);
 		Lfield3.setVisible(false);
+		waiting = false;
 		}
 		else if(target == "LD")
 		{
@@ -265,6 +369,7 @@ public class CardsPanel extends JPanel
 		discard.setIcon(picture);
 		}
 	}
+	
 
 	private void setupLayout()
 	{

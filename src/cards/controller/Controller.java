@@ -16,7 +16,6 @@ public class Controller
 	private Deck Rpile2;
 	private Deck Lpile3;
 	private Deck Rpile3;
-	private Deck Choice;
 	private Scanner input;
 	private CardsFrame frame;
 	
@@ -32,14 +31,13 @@ public class Controller
 	this.Rpile2 = new Deck(true, false);
 	this.Lpile3 = new Deck(true, false);
 	this.Rpile3 = new Deck(true, false);
-	this.Choice = new Deck(true, false);
 	this.input = new Scanner(System.in);
 	this.frame = new CardsFrame(this);
 	}
 	
 	public void start()
 	{
-		Boolean over = false;
+		
 		Ldeck.shuffle();
 		Rdeck.add(Ldeck.split());
 		/*
@@ -191,57 +189,52 @@ public class Controller
 		System.out.println(three);
 	}
 	
-	public void emptyPlace()
+	public void emptyPlace(String location)
 	{
-		if(Lpile1.checkSize() == 0)
+		switch(location)
 		{
+		case "L1":
+			if(Lpile1.checkSize() != 0)
+			{
+				Ldeck.add(Lpile1.draw());
+			}
 			Lpile1.add("XX");
+			break;
+		case "L2":
+			if(Lpile2.checkSize() != 0)
+			{
+				Ldeck.add(Lpile2.draw());
+			}
+			Lpile2.add("XX");
+			break;
+		case "L3":
+			if(Lpile3.checkSize() != 0)
+			{
+				Ldeck.add(Lpile3.draw());
+			}
+			Lpile3.add("XX");
+			break;
+		case "R1":
 			if(Rpile1.checkSize() != 0)
 			{
-				if(Rpile1.peek() != "XX")
-				{
-					Rdeck.add(Rpile1.draw());
-					Rpile1.add("XX");
-				}
+				Rdeck.add(Rpile1.draw());
 			}
-			else if (Rpile1.checkSize() == 0)
-			{
-				Rpile1.add("XX");
-			}
-		}
-		
-		else if(Lpile2.checkSize() == 0)
-		{
-			Lpile2.add("XX");
+			Rpile1.add("XX");
+			break;
+		case "R2":
 			if(Rpile2.checkSize() != 0)
 			{
-				if(Rpile2.peek() != "XX")
-				{
-					Rdeck.add(Rpile2.draw());
-					Rpile2.add("XX");
-				}
+				Rdeck.add(Rpile2.draw());
 			}
-			else if (Rpile2.checkSize() == 0)
-			{
-				Rpile2.add("XX");
-			}
-		}
-		
-		else if (Lpile3.checkSize() == 0)
-		{
-			Lpile3.add("XX");
+			Rpile2.add("XX");
+			break;
+		case "R3":
 			if(Rpile3.checkSize() != 0)
 			{
-				if(Rpile3.peek() != "XX")
-				{
-					Rdeck.add(Rpile3.draw());
-					Rpile3.add("XX");
-				}
+				Rdeck.add(Rpile3.draw());
 			}
-			else if (Rpile3.checkSize() == 0)
-			{
-				Rpile3.add("XX");
-			}
+			Rpile3.add("XX");
+			break;
 		}
 	}
 	
