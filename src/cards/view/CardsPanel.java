@@ -43,7 +43,9 @@ public class CardsPanel extends JPanel
 		private JButton next;
 		private JLabel discard;
 		private ImageIcon picture;
-		private boolean waiting;
+		private int nextControl;
+		private String battle;
+		private JLabel title;
 		
 
 	public CardsPanel(Controller app)
@@ -69,7 +71,10 @@ public class CardsPanel extends JPanel
 		this.next = new JButton("put steps here");
 		this.discard = new JLabel("");
 		this.picture = new ImageIcon();
-		this.waiting = true;
+		this.nextControl = 0;
+		this.battle = "";
+		this.title = new JLabel(" War 2");
+		
 		
 		setupPanel();
 		setupListeners();
@@ -99,6 +104,7 @@ public class CardsPanel extends JPanel
 		this.add(Ldeck);
 		this.add(Rdeck);
 		this.add(discard);
+		this.add(title);
 		
 		updateDisplay("", "LD");
 		updateDisplay("", "RD");
@@ -106,8 +112,8 @@ public class CardsPanel extends JPanel
 		Lfield1.setVisible(false);
 		Lfield2.setVisible(false);
 		Lfield3.setVisible(false);
-		
-
+		Llabel1.setForeground(Color.red);
+		Llabel1.setBackground(Color.red);
 		
 		next.setVisible(false);
 		
@@ -121,8 +127,8 @@ public class CardsPanel extends JPanel
 		Lfield1.addActionListener(click -> updateDisplay(drawCard("L1"), "L1"));
 		Lfield2.addActionListener(click -> updateDisplay(drawCard("L2"), "L2"));
 		Lfield3.addActionListener(click -> updateDisplay(drawCard("L3"), "L3"));
-		
-		
+		start.addActionListener(click -> start());
+		next.addActionListener(click -> nextButton(nextControl));
 	}
 	
 	private String drawCard(String pile)
@@ -134,13 +140,21 @@ public class CardsPanel extends JPanel
 		return card;
 	}
 	
-	private void fillBoard()
+	private void start()
+	{
+		next.setText("draw");
+		next.setVisible(true);
+		start.setVisible(false);
+		nextControl = 0;
+	}
+	
+	private void placeBoth()
 	{
 		int deckSize = 0;
 		String available = "";
-		while(!app.boardFull()) 
+		if(app.boardFull() == false) 
 		{
-			if(!app.rightFull())
+			if(app.rightFull() == false)
 			{
 				deckSize = app.RdeckSize();
 				available = app.checkRight();
@@ -184,12 +198,10 @@ public class CardsPanel extends JPanel
 					}
 				}
 			}
-			if(!app.leftFull()) 
+			if(app.leftFull() == false) 
 			{
 				deckSize = app.LdeckSize();
 				available = app.checkLeft();
-				waiting = true;
-				
 				if(deckSize == 0)
 				{
 					if(available.contains("1"))
@@ -219,6 +231,7 @@ public class CardsPanel extends JPanel
 					if(available.contains("1"))
 					{
 						Lfield1.setVisible(true);
+						
 					}
 					if(available.contains("2"))
 					{
@@ -229,10 +242,6 @@ public class CardsPanel extends JPanel
 						Lfield3.setVisible(true);
 					}
 					
-					while(waiting == true)
-					{
-						
-					}
 				}
 				
 			}
@@ -240,6 +249,127 @@ public class CardsPanel extends JPanel
 		}
 	}
 	
+	private void nextButton(int control)
+	{
+		if(control == 0)//placement
+		{
+			if(app.boardFull() == false)
+			{
+				placeBoth();
+			}
+			if(app.boardFull() == true)
+			{
+				if(app.checkOver()) 
+				{
+					
+				}
+				else
+				{
+				next.setText("battle");
+				nextControl = 1;
+				battle = "";
+				}
+			}
+		}
+		if(control == 1)//battle
+		{
+			String result = "";
+			if(!battle.contains("1"))
+			{
+				result = app.combat(1);
+				if(result == "Right")
+				{
+					Llabel1.setText("X");
+				}
+				else if (result == "Left")
+				{
+					Rlabel1.setText("X");
+				}
+				else if (result == "Tie")
+				{
+					Llabel1.setText("X");
+					Rlabel1.setText("X");
+				}
+				battle += "1";
+			}
+			else if (!battle.contains("2"))
+			{
+				result = app.combat(2);
+				if(result == "Right")
+				{
+					Llabel2.setText("X");
+				}
+				else if (result == "Left")
+				{
+					Rlabel2.setText("X");
+				}
+				else if (result == "Tie")
+				{
+					Llabel2.setText("X");
+					Rlabel2.setText("X");
+				}
+				battle += "2";
+			}
+			else if(!battle.contains("3"))
+			{
+				result = app.combat(3);
+				if(result == "Right")
+				{
+					Llabel3.setText("X");
+				}
+				else if (result == "Left")
+				{
+					Rlabel3.setText("X");
+				}
+				else if (result == "Tie")
+				{
+					Llabel3.setText("X");
+					Rlabel3.setText("X");
+				}
+				next.setText("clear");
+				battle += "3";
+			}
+			else
+			{
+				String set = app.checkLeft();
+				if(set.contains("1"))
+				{
+					Llabel1.setVisible(false);
+					Llabel1.setText("");
+				}
+				if(set.contains("2"))
+				{
+					Llabel2.setVisible(false);
+					Llabel2.setText("");
+				}
+				if(set.contains("3"))
+				{
+					Llabel3.setVisible(false);
+					Llabel3.setText("");
+				}
+				
+				set = app.checkRight();
+				if(set.contains("1"))
+				{
+					Rlabel1.setVisible(false);
+					Rlabel1.setText("");
+				}
+				if(set.contains("2"))
+				{
+					Rlabel2.setVisible(false);
+					Rlabel2.setText("");
+				}
+				if(set.contains("3"))
+				{
+					Rlabel3.setVisible(false);
+					Rlabel3.setText("");
+				}
+				
+				
+			}
+		}
+		
+	}
 	
 	
 	private void updateDisplay(String name, String target)
@@ -259,10 +389,10 @@ public class CardsPanel extends JPanel
 			picture = new ImageIcon(getClass().getResource(path + defaultName + extension));
 		}
 		Llabel1.setIcon(picture);
+		Llabel1.setVisible(true);
 		Lfield1.setVisible(false);
 		Lfield2.setVisible(false);
 		Lfield3.setVisible(false);
-		waiting = false;
 		}
 		else if(target == "L2")
 		{
@@ -275,10 +405,10 @@ public class CardsPanel extends JPanel
 			picture = new ImageIcon(getClass().getResource(path + defaultName + extension));
 		}
 		Llabel2.setIcon(picture);
+		Llabel2.setVisible(true);
 		Lfield1.setVisible(false);
 		Lfield2.setVisible(false);
 		Lfield3.setVisible(false);
-		waiting = false;
 		}
 		else if(target == "L3")
 		{
@@ -291,10 +421,10 @@ public class CardsPanel extends JPanel
 			picture = new ImageIcon(getClass().getResource(path + defaultName + extension));
 		}
 		Llabel3.setIcon(picture);
+		Llabel3.setVisible(true);
 		Lfield1.setVisible(false);
 		Lfield2.setVisible(false);
 		Lfield3.setVisible(false);
-		waiting = false;
 		}
 		else if(target == "LD")
 		{
@@ -319,6 +449,7 @@ public class CardsPanel extends JPanel
 			picture = new ImageIcon(getClass().getResource(path + defaultName + extension));
 		}
 		Rlabel1.setIcon(picture);
+		Rlabel1.setVisible(true);
 		}
 		else if(target == "R2")
 		{
@@ -331,6 +462,7 @@ public class CardsPanel extends JPanel
 			picture = new ImageIcon(getClass().getResource(path + defaultName + extension));
 		}
 		Rlabel2.setIcon(picture);
+		Rlabel2.setVisible(true);
 		}
 		else if(target == "R3")
 		{
@@ -343,6 +475,7 @@ public class CardsPanel extends JPanel
 			picture = new ImageIcon(getClass().getResource(path + defaultName + extension));
 		}
 		Rlabel3.setIcon(picture);
+		Rlabel3.setVisible(true);
 		}
 		else if(target == "RD")
 		{
@@ -392,6 +525,10 @@ public class CardsPanel extends JPanel
 		layout.putConstraint(SpringLayout.NORTH, discard, 220, SpringLayout.NORTH, this);
 		layout.putConstraint(SpringLayout.WEST, discard, 50, SpringLayout.EAST, leftPanel);
 		layout.putConstraint(SpringLayout.EAST, Rdeck, 0, SpringLayout.EAST, this);
-		
+		title.setFont(new Font("Comic Sans MS", Font.BOLD, 50));
+		layout.putConstraint(SpringLayout.NORTH, title, 0, SpringLayout.NORTH, leftPanel);
+		layout.putConstraint(SpringLayout.WEST, title, 0, SpringLayout.EAST, leftPanel);
+		layout.putConstraint(SpringLayout.SOUTH, title, -50, SpringLayout.NORTH, discard);
+		layout.putConstraint(SpringLayout.EAST, title, 0, SpringLayout.WEST, rightPanel);
 	}
 }

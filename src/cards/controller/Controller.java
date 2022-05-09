@@ -65,6 +65,22 @@ public class Controller
 		
 	}
 	
+	public Boolean checkOver()
+	{
+		Boolean over = false;
+		
+		if(Ldeck.checkSize() == 0 && Lpile1.peek() == "XX" && Lpile2.peek() == "XX" && Lpile3.peek() == "XX")
+		{
+			over = true;
+		}
+		else if(Rdeck.checkSize() == 0 && Rpile1.peek() == "XX" && Rpile2.peek() == "XX" && Rpile3.peek() == "XX")
+		{
+			over = true;
+		}
+		
+		return over;
+	}
+	
 	public int LdeckSize()
 	{
 		int size = Ldeck.checkSize();
@@ -329,50 +345,62 @@ public class Controller
 		
 	}
 	
-	public void cardSelect(String card)
+	public String combat(int row)
 	{
-		String choices = "You may place the card " + card + " at ";
-		int choice = 0;
-		Boolean done = false;
+		String result = "";
 		
-		if(Lpile1.checkSize() == 0)
+		if(row == 1)
 		{
-			choices += "1, ";
+			result = victor(Lpile1.peek(), Rpile1.peek());
+			if(result == "Left")
+			{
+				Discard.add(Lpile1.draw());
+			}
+			else if(result == "Right")
+			{
+				Discard.add(Rpile1.draw());
+			}
+			else if (result == "Tie")
+			{
+				Discard.add(Lpile1.draw());
+				Discard.add(Rpile1.draw());
+			}
 		}
-		if(Lpile2.checkSize() == 0)
+		else if(row == 2)
 		{
-			choices += "2, ";
+			result = victor(Lpile2.peek(), Rpile2.peek());
+			if(result == "Left")
+			{
+				Discard.add(Lpile2.draw());
+			}
+			else if(result == "Right")
+			{
+				Discard.add(Rpile2.draw());
+			}
+			else if (result == "Tie")
+			{
+				Discard.add(Lpile2.draw());
+				Discard.add(Rpile2.draw());
+			}
 		}
-		if(Lpile3.checkSize() == 0)
+		else if(row == 3)
 		{
-			choices += "3";
+			result = victor(Lpile3.peek(), Rpile3.peek());
+			if(result == "Left")
+			{
+				Discard.add(Lpile3.draw());
+			}
+			else if(result == "Right")
+			{
+				Discard.add(Rpile3.draw());
+			}
+			else if (result == "Tie")
+			{
+				Discard.add(Lpile3.draw());
+				Discard.add(Rpile3.draw());
+			}
 		}
-		
-		System.out.println(choices);
-		while(!done)
-		{
-		choice = input.nextInt();
-		
-		if(choice == 1 && Lpile1.checkSize() == 0)
-		{
-			Lpile1.add(card);
-			done = true;
-		}
-		else if (choice == 2 && Lpile2.checkSize() == 0)
-		{
-			Lpile2.add(card);
-			done = true;
-		}
-		else if (choice == 3 && Lpile3.checkSize() == 0)
-		{
-			Lpile3.add(card);
-			done = true;
-		}
-		else
-		{
-			System.out.println("Please enter an appropriate value");
-		}
-		}
+		return result;
 	}
 	
 	/**
