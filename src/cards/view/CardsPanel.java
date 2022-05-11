@@ -24,30 +24,100 @@ import javax.swing.JPanel;
 
 public class CardsPanel extends JPanel
 {
+		/**
+		 * A connection to the controller
+		 */
 		private Controller app;
+		/**
+		 * a panel to hold Llabel 1-3
+		 */
 		private JPanel leftPanel;
+		/**
+		 * a panel to hold Rlabel 1-3
+		 */
 		private JPanel rightPanel;
+		/**
+		 * they layout for the gui
+		 */
 		private SpringLayout layout;
+		/**
+		 * a button for placing the top left card
+		 */
 		private JButton Lfield1;
+		/**
+		 * a button for placing the middle left card
+		 */
 		private JButton Lfield2;
+		/**
+		 * a button for placing the bottom left card
+		 */
 		private JButton Lfield3;
+		/**
+		 * a label to display the top left card
+		 */
 		private JLabel Llabel1;
+		/**
+		 * a label to display the middle left card
+		 */
 		private JLabel Llabel2;
+		/**
+		 * a label to display the bottom left card
+		 */
 		private JLabel Llabel3;
+		/**
+		 * a label to display the top right card
+		 */
 		private JLabel Rlabel1;
+		/**
+		 * a label to display the middle right card
+		 */
 		private JLabel Rlabel2;
+		/**
+		 * a label to display the bottom right card
+		 */
 		private JLabel Rlabel3;
+		/**
+		 * a label to display the left deck of cards
+		 */
 		private JLabel Ldeck;
+		/**
+		 * a label to display the right deck of cards
+		 */
 		private JLabel Rdeck;
+		/**
+		 * a button to begin the game
+		 */
 		private JButton start;
+		/**
+		 * a button that controls the flow of the game
+		 */
 		private JButton next;
+		/**
+		 * a label to display the discard pile
+		 */
 		private JLabel discard;
+		/**
+		 * an imageIcon used to change the pictures on the labels
+		 */
 		private ImageIcon picture;
+		/**
+		 * an int used to determine the state the games in
+		 */
 		private int nextControl;
+		/**
+		 * a string used to determine where in the battle phase the game is in
+		 */
 		private String battle;
+		/**
+		 * a label used to display the winner of the game
+		 */
 		private JLabel title;
 		
-
+		/**
+		 * initializes the values in the gui
+		 * @param app
+		 * an instance of the controller
+		 */
 	public CardsPanel(Controller app)
 	{
 		super();
@@ -73,7 +143,8 @@ public class CardsPanel extends JPanel
 		this.picture = new ImageIcon();
 		this.nextControl = 0;
 		this.battle = "";
-		this.title = new JLabel(" War 2");
+		this.title = new JLabel("");
+		
 		
 		
 		setupPanel();
@@ -81,6 +152,9 @@ public class CardsPanel extends JPanel
 		setupLayout();
 	}
 
+	/**
+	 * sets up the game and gui
+	 */
 	private void setupPanel()
 	{
 		this.setLayout(layout);
@@ -112,7 +186,7 @@ public class CardsPanel extends JPanel
 		Lfield1.setVisible(false);
 		Lfield2.setVisible(false);
 		Lfield3.setVisible(false);
-		Llabel1.setForeground(Color.red);
+		Llabel1.setForeground(Color.BLACK);
 		Llabel1.setBackground(Color.red);
 		
 		next.setVisible(false);
@@ -122,6 +196,9 @@ public class CardsPanel extends JPanel
 		this.add(leftPanel);
 	}
 
+	/**
+	 * holds the ActionListeners for the game
+	 */
 	private void setupListeners()
 	{
 		Lfield1.addActionListener(click -> updateDisplay(drawCard("L1"), "L1"));
@@ -131,6 +208,13 @@ public class CardsPanel extends JPanel
 		next.addActionListener(click -> nextButton(nextControl));
 	}
 	
+	/**
+	 * a function to access the placement function in the controller, sends a value equivalent to a card drawn in placement
+	 * @param pile
+	 * the value sent to placement as a parameter, used to determine what pile to draw a card from
+	 * @return
+	 * returns the value of the card as a string
+	 */
 	private String drawCard(String pile)
 	{
 		String card = "";
@@ -140,6 +224,9 @@ public class CardsPanel extends JPanel
 		return card;
 	}
 	
+	/**
+	 * gets the game in motion
+	 */
 	private void start()
 	{
 		next.setText("draw");
@@ -148,6 +235,9 @@ public class CardsPanel extends JPanel
 		nextControl = 0;
 	}
 	
+	/**
+	 * places a card on the right and allows the player to place a card
+	 */
 	private void placeBoth()
 	{
 		int deckSize = 0;
@@ -160,6 +250,7 @@ public class CardsPanel extends JPanel
 				available = app.checkRight();
 				if(deckSize == 0)
 				{
+					Rdeck.setVisible(false);
 					if(available.contains("1"))
 					{
 						app.emptyPlace("L1");
@@ -204,6 +295,7 @@ public class CardsPanel extends JPanel
 				available = app.checkLeft();
 				if(deckSize == 0)
 				{
+					Ldeck.setVisible(false);
 					if(available.contains("1"))
 					{
 						app.emptyPlace("L1");
@@ -228,10 +320,10 @@ public class CardsPanel extends JPanel
 				}
 				else
 				{
+					updateDisplay(app.peekLeft(), "LD");
 					if(available.contains("1"))
 					{
 						Lfield1.setVisible(true);
-						
 					}
 					if(available.contains("2"))
 					{
@@ -249,6 +341,11 @@ public class CardsPanel extends JPanel
 		}
 	}
 	
+	/**
+	 * controls the speed of the game by tying it to the press of a button
+	 * @param control
+	 * the phase of the game the next button should be controlling
+	 */
 	private void nextButton(int control)
 	{
 		if(control == 0)//placement
@@ -261,7 +358,20 @@ public class CardsPanel extends JPanel
 			{
 				if(app.checkOver()) 
 				{
-					
+					if(app.whoWins() == "Tie")
+					{
+						title.setText("WoW a Tie");
+					}
+					else if(app.whoWins() == "Left")
+					{
+						title.setText("You Win!");
+					}
+					else if(app.whoWins() == "Right")
+					{
+						title.setText("haha you lose");
+					}
+					next.setText("game over");
+					nextControl = 2;
 				}
 				else
 				{
@@ -274,6 +384,9 @@ public class CardsPanel extends JPanel
 		if(control == 1)//battle
 		{
 			String result = "";
+			battle += app.checkEmpty();
+			
+			
 			if(!battle.contains("1"))
 			{
 				result = app.combat(1);
@@ -364,14 +477,42 @@ public class CardsPanel extends JPanel
 					Rlabel3.setVisible(false);
 					Rlabel3.setText("");
 				}
-				
-				
+				next.setText("placement");
+				nextControl = 0;
 			}
+		}
+		if(control == 2)
+		{
+			setBackground(randomColor());
 		}
 		
 	}
 	
+	/**
+	 * a function to get a random color
+	 * @return
+	 * a color
+	 */
+	private Color randomColor()
+	{
+		Color randomColor = null;
+		
+		int red = (int) (Math.random() * 256);
+		int green = (int) (Math.random() * 256);
+		int blue = (int) (Math.random() * 256);
+		
+		randomColor = new Color (red, green, blue);
+		
+		return randomColor;
+	}
 	
+	/**
+	 * takes two values to update a label to look like the specified card
+	 * @param name
+	 * the value of the card you want to make the label look like
+	 * @param target
+	 * the label you want to change
+	 */
 	private void updateDisplay(String name, String target)
 	{
 		String path = "/cards/view/Card_Images/";
@@ -393,6 +534,7 @@ public class CardsPanel extends JPanel
 		Lfield1.setVisible(false);
 		Lfield2.setVisible(false);
 		Lfield3.setVisible(false);
+		updateDisplay("", "LD");
 		}
 		else if(target == "L2")
 		{
@@ -409,6 +551,7 @@ public class CardsPanel extends JPanel
 		Lfield1.setVisible(false);
 		Lfield2.setVisible(false);
 		Lfield3.setVisible(false);
+		updateDisplay("", "LD");
 		}
 		else if(target == "L3")
 		{
@@ -425,6 +568,7 @@ public class CardsPanel extends JPanel
 		Lfield1.setVisible(false);
 		Lfield2.setVisible(false);
 		Lfield3.setVisible(false);
+		updateDisplay("", "LD");
 		}
 		else if(target == "LD")
 		{
@@ -503,7 +647,9 @@ public class CardsPanel extends JPanel
 		}
 	}
 	
-
+	/**
+	 * sets the layout of the gui
+	 */
 	private void setupLayout()
 	{
 		layout.putConstraint(SpringLayout.NORTH, leftPanel, 40, SpringLayout.NORTH, this);
@@ -525,10 +671,10 @@ public class CardsPanel extends JPanel
 		layout.putConstraint(SpringLayout.NORTH, discard, 220, SpringLayout.NORTH, this);
 		layout.putConstraint(SpringLayout.WEST, discard, 50, SpringLayout.EAST, leftPanel);
 		layout.putConstraint(SpringLayout.EAST, Rdeck, 0, SpringLayout.EAST, this);
-		title.setFont(new Font("Comic Sans MS", Font.BOLD, 50));
+		title.setFont(new Font("Comic Sans MS", Font.BOLD, 25));
 		layout.putConstraint(SpringLayout.NORTH, title, 0, SpringLayout.NORTH, leftPanel);
-		layout.putConstraint(SpringLayout.WEST, title, 0, SpringLayout.EAST, leftPanel);
 		layout.putConstraint(SpringLayout.SOUTH, title, -50, SpringLayout.NORTH, discard);
+		layout.putConstraint(SpringLayout.WEST, title, 20, SpringLayout.EAST, leftPanel);
 		layout.putConstraint(SpringLayout.EAST, title, 0, SpringLayout.WEST, rightPanel);
 	}
 }

@@ -5,8 +5,17 @@ import java.util.Collections;
 
 public class Deck
 {
+	/**
+	 * a boolean value used to check if the deck contains jokers
+	 */
 	private Boolean jokers;
+	/**
+	 * a boolean value used to check if the deck is empty
+	 */
 	private Boolean empty;
+	/**
+	 * an arrayList used to hold the contents of a deck
+	 */
 	private ArrayList<String> contents;
 
 	/**

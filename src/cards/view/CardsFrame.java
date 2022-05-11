@@ -5,9 +5,20 @@ import javax.swing.JFrame;
 
 public class CardsFrame extends JFrame
 {
+		/**
+		 * an instance of controller
+		 */
 		private Controller app;
+		/**
+		 * an instance of CardsPanel
+		 */
 		private CardsPanel panel;
 		
+		/**
+		 * creates the frame
+		 * @param app
+		 * an instance of controller
+		 */
 		public CardsFrame(Controller app)
 		{
 			super();
@@ -17,10 +28,13 @@ public class CardsFrame extends JFrame
 			setupFrame();
 		}
 		
+		/**
+		 * sets up the frame
+		 */
 		private void setupFrame()
 		{
 			this.setContentPane(panel);
-			this.setTitle("Cards");
+			this.setTitle("War 2 electric warbaloo");
 			this.setSize(800, 600);
 			this.setResizable(false);
 			this.setVisible(true);

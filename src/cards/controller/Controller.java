@@ -6,19 +6,50 @@ import cards.view.CardsFrame;
 
 public class Controller
 {
-
+	/**
+	 * an instance of deck used to hold the cards in the Left deck
+	 */
 	private Deck Ldeck;
+	/**
+	 * an instance of deck used to hold the cards in the right deck
+	 */
 	private Deck Rdeck;
+	/**
+	 * an instance of deck used to hold the cards in the discard
+	 */
 	private Deck Discard;
+	/**
+	 * an instance of deck used to hold the cards in the top left pile
+	 */
 	private Deck Lpile1;
+	/**
+	 * an instance of deck used to hold the cards in the top right pile
+	 */
 	private Deck Rpile1;
+	/**
+	 * an instance of deck used to hold the cards in the middle left pile
+	 */
 	private Deck Lpile2;
+	/**
+	 * an instance of deck used to hold the cards in the middle right pile
+	 */
 	private Deck Rpile2;
+	/**
+	 * an instance of deck used to hold the cards in the bottom left pile
+	 */
 	private Deck Lpile3;
+	/**
+	 * an instance of deck used to hold the cards in the bottom right pile
+	 */
 	private Deck Rpile3;
-	private Scanner input;
+	/**
+	 * an instance of cardsFrame 
+	 */
 	private CardsFrame frame;
 	
+	/**
+	 * initializes all the values
+	 */
 	public Controller()
 	{
 	
@@ -31,49 +62,31 @@ public class Controller
 	this.Rpile2 = new Deck(true, false);
 	this.Lpile3 = new Deck(true, false);
 	this.Rpile3 = new Deck(true, false);
-	this.input = new Scanner(System.in);
 	this.frame = new CardsFrame(this);
 	}
-	
+	 /**
+	  * sets up the game
+	  */
 	public void start()
 	{
-		
 		Ldeck.shuffle();
 		Rdeck.add(Ldeck.split());
-		/*
-		while(!over)
-		{
-			placement();
-			removal();
-			
-			System.out.println("left has " + Ldeck.checkSize() + " cards remaining");
-			System.out.println("right has " + Rdeck.checkSize() + " cards remaining");
-			
-			if(Ldeck.checkSize() == 0 && Lpile1.peek() == "XX" && Lpile2.peek() == "XX" && Lpile3.peek() == "XX")
-			{
-				System.out.println("Right wins, better luck next time");
-				over = true;
-			}
-			else if(Rdeck.checkSize() == 0 && Rpile1.peek() == "XX" && Rpile2.peek() == "XX" && Rpile3.peek() == "XX")
-			{
-				System.out.println("Left wins, good job");
-				over = true;
-			}
-		}
-		*/
-		
-		
 	}
-	
+	 
+	/**
+	 * checks if the game is over
+	 * @return
+	 * returns true or falsed based on if the game is over or not
+	 */
 	public Boolean checkOver()
 	{
 		Boolean over = false;
 		
-		if(Ldeck.checkSize() == 0 && Lpile1.peek() == "XX" && Lpile2.peek() == "XX" && Lpile3.peek() == "XX")
+		if(Lpile1.peek() == "XX" && Lpile2.peek() == "XX" && Lpile3.peek() == "XX")
 		{
 			over = true;
 		}
-		else if(Rdeck.checkSize() == 0 && Rpile1.peek() == "XX" && Rpile2.peek() == "XX" && Rpile3.peek() == "XX")
+		else if(Rpile1.peek() == "XX" && Rpile2.peek() == "XX" && Rpile3.peek() == "XX")
 		{
 			over = true;
 		}
@@ -81,18 +94,94 @@ public class Controller
 		return over;
 	}
 	
+	/**
+	 * determines the outcome of the game
+	 * @return
+	 * returns a string detailing the winner
+	 */
+	public String whoWins()
+	{
+		String winner = "";
+		
+		if(Ldeck.checkSize() == 0 && Rdeck.checkSize() == 0)
+		{
+			winner = "Tie";
+		}
+		else if(Ldeck.checkSize() == 0)
+		{
+			winner = "Right";
+		}
+		else if(Rdeck.checkSize() == 0)
+		{
+			winner = "Left";
+		}
+		
+		return winner;
+	}
+	
+	/**
+	 * checks the size of the left deck
+	 * @return
+	 * the number of cards left in the deck
+	 */
 	public int LdeckSize()
 	{
 		int size = Ldeck.checkSize();
 		return size;
 	}
 	
+	/**
+	 * checks the top card of the left deck
+	 * @return
+	 * the value of the top card
+	 */
+	public String peekLeft()
+	{
+		String peek = Ldeck.peek();
+		return peek;
+	}
+	
+	/**
+	 * checks the size of the right deck
+	 * @return
+	 * the number of cards left in the deck
+	 */
 	public int RdeckSize()
 	{
 		int size = Rdeck.checkSize();
 		return size;
 	}
 	
+	/**
+	 * checks the three rows for the empty cards
+	 * @return
+	 * returns a string containing 1,2, and/or 3 based on if the rows have empty cards in them
+	 */
+	public String checkEmpty()
+	{
+		String check = "";
+	
+			if(Lpile1.peek() == "XX" || Rpile1.peek() == "XX")
+			{
+				check += "1";
+			}
+			if(Lpile2.peek() == "XX" || Rpile2.peek() == "XX")
+			{
+				check += "2";
+			}
+			if(Lpile3.peek() == "XX" || Rpile3.peek() == "XX")
+			{
+				check += "3";
+			}
+		
+		return check;
+	}
+	
+	/**
+	 * checks the left values to determine which ones have cards or not
+	 * @return
+	 * returns a string with 1,2,and/or 3 based on what rows on the left side are empty
+	 */
 	public String checkLeft()
 	{
 		String check = "";
@@ -113,6 +202,11 @@ public class Controller
 		return check;
 	}
 	
+	/**
+	 * checks the right values to determine which ones have cards or not
+	 * @return
+	 * returns a string containing 1.2.and/or 3 based on what right rows are empty
+	 */
 	public String checkRight()
 	{
 		String check = "";
@@ -133,78 +227,11 @@ public class Controller
 		return check;
 	}
 	
-	public void removal()
-	{
-		String round1 = victor(Lpile1.peek(), Rpile1.peek());
-		String round2 = victor(Lpile2.peek(), Rpile2.peek());
-		String round3 = victor(Lpile3.peek(), Rpile3.peek());
-		if(round1 == "Left")
-		{
-			Discard.add(Rpile1.draw());
-			System.out.println("Left wins row 1");
-		}
-		else if (round1 == "Right")
-		{
-			Discard.add(Lpile1.draw());
-			System.out.println("Right wins row 1");
-		}
-		else if (round1 == "Tie")
-		{
-			Discard.add(Lpile1.draw());
-			Discard.add(Rpile1.draw());
-			System.out.println("Its a tie, they both die");
-		}
-		
-		if(round2 == "Left")
-		{
-			Discard.add(Rpile2.draw());
-			System.out.println("Left wins row 2");
-		}
-		else if (round2 == "Right")
-		{
-			Discard.add(Lpile2.draw());
-			System.out.println("Right wins row 2");
-		}
-		else if (round2 == "Tie")
-		{
-			Discard.add(Lpile2.draw());
-			Discard.add(Rpile2.draw());
-			System.out.println("Its a tie, they both die");
-		}
-		
-		if(round3 == "Left")
-		{
-			Discard.add(Rpile3.draw());
-			System.out.println("Left wins row 3");
-		}
-		else if (round3 == "Right")
-		{
-			Discard.add(Lpile3.draw());
-			System.out.println("Right wins row 3");
-		}
-		else if (round3 == "Tie")
-		{
-			Discard.add(Lpile3.draw());
-			Discard.add(Rpile3.draw());
-			System.out.println("Its a tie, they both die");
-		}
-	}
-	
-	public void display()
-	{
-		String one = "";
-		String two = "";
-		String three = "";
-		
-		one = "Left 1 : " + Lpile1.getContents() + " Right 1 : " + Rpile1.getContents();
-		two = "Left 2 : " + Lpile2.getContents() + " Right 2 : " + Rpile2.getContents();
-		three = "Left 3 : " + Lpile3.getContents() + " Right 3 : " + Rpile3.getContents();
-		
-		System.out.println(one);
-		System.out.println(two);
-		System.out.println(three);
-	}
-	
+	/**
+	 * fills a selected value with empty cards
+	 * @param location
+	 * the location of the empty placement
+	 */
 	public void emptyPlace(String location)
 	{
 		switch(location)
@@ -254,6 +281,11 @@ public class Controller
 		}
 	}
 	
+	/**
+	 * checks if all piles on the board are full
+	 * @return
+	 * true or false based on if its full or not
+	 */
 	public boolean boardFull()
 	{
 		boolean full = true;
@@ -270,6 +302,11 @@ public class Controller
 		return full;
 	}
 	
+	/**
+	 * checks if the left piles are all full
+	 * @return
+	 * true or false based on if its full or not
+	 */
 	public boolean leftFull()
 	{
 		boolean full = true;
@@ -290,6 +327,11 @@ public class Controller
 		return full;
 	}
 	
+	/**
+	 * checks if the right piles are all full
+	 * @return
+	 * returns true or false based on if its full or not
+	 */
 	public boolean rightFull()
 	{
 		boolean full = true;
@@ -310,6 +352,13 @@ public class Controller
 		return full;
 	}
 	
+	/**
+	 * places a card at a given location
+	 * @param pile
+	 * the chosen pile to place a card in
+	 * @return
+	 * the value of the card placed
+	 */
 	public String placement(String pile)
 	{
 		String card = "";
@@ -345,6 +394,13 @@ public class Controller
 		
 	}
 	
+	/**
+	 * uses the results from victor to remove cards of a given row
+	 * @param row
+	 * the row effected
+	 * @return
+	 * the result of the chosen fight
+	 */
 	public String combat(int row)
 	{
 		String result = "";
@@ -354,11 +410,11 @@ public class Controller
 			result = victor(Lpile1.peek(), Rpile1.peek());
 			if(result == "Left")
 			{
-				Discard.add(Lpile1.draw());
+				Discard.add(Rpile1.draw());
 			}
 			else if(result == "Right")
 			{
-				Discard.add(Rpile1.draw());
+				Discard.add(Lpile1.draw());
 			}
 			else if (result == "Tie")
 			{
@@ -371,11 +427,11 @@ public class Controller
 			result = victor(Lpile2.peek(), Rpile2.peek());
 			if(result == "Left")
 			{
-				Discard.add(Lpile2.draw());
+				Discard.add(Rpile2.draw());
 			}
 			else if(result == "Right")
 			{
-				Discard.add(Rpile2.draw());
+				Discard.add(Lpile2.draw());
 			}
 			else if (result == "Tie")
 			{
@@ -388,11 +444,11 @@ public class Controller
 			result = victor(Lpile3.peek(), Rpile3.peek());
 			if(result == "Left")
 			{
-				Discard.add(Lpile3.draw());
+				Discard.add(Rpile3.draw());
 			}
 			else if(result == "Right")
 			{
-				Discard.add(Rpile3.draw());
+				Discard.add(Lpile3.draw());
 			}
 			else if (result == "Tie")
 			{
@@ -406,7 +462,9 @@ public class Controller
 	/**
 	 * Takes two strings and uses the result of the battle method to return a string describing the outcome
 	 * @param left
+	 * a string value representing a card
 	 * @param right
+	 * a string value representing a card
 	 * @return returns left, right, or tie based on the result of the battle
 	 */
 	public String victor(String left, String right)
