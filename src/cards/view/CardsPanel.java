@@ -112,6 +112,14 @@ public class CardsPanel extends JPanel
 		 * a label used to display the winner of the game
 		 */
 		private JLabel title;
+		/**
+		 * a button used to save the discard piles contents
+		 */
+		private JButton save;
+		/**
+		 * a button used to load the saved contents
+		 */
+		private JButton load;
 		
 		/**
 		 * initializes the values in the gui
@@ -144,7 +152,8 @@ public class CardsPanel extends JPanel
 		this.nextControl = 0;
 		this.battle = "";
 		this.title = new JLabel("");
-		
+		this.save = new JButton("save");
+		this.load = new JButton("load");
 		
 		
 		setupPanel();
@@ -179,6 +188,8 @@ public class CardsPanel extends JPanel
 		this.add(Rdeck);
 		this.add(discard);
 		this.add(title);
+		this.add(save);
+		this.add(load);
 		
 		updateDisplay("", "LD");
 		updateDisplay("", "RD");
@@ -206,6 +217,8 @@ public class CardsPanel extends JPanel
 		Lfield3.addActionListener(click -> updateDisplay(drawCard("L3"), "L3"));
 		start.addActionListener(click -> start());
 		next.addActionListener(click -> nextButton(nextControl));
+		save.addActionListener(click -> app.save());
+		load.addActionListener(click -> app.load());
 	}
 	
 	/**
@@ -676,5 +689,8 @@ public class CardsPanel extends JPanel
 		layout.putConstraint(SpringLayout.SOUTH, title, -50, SpringLayout.NORTH, discard);
 		layout.putConstraint(SpringLayout.WEST, title, 20, SpringLayout.EAST, leftPanel);
 		layout.putConstraint(SpringLayout.EAST, title, 0, SpringLayout.WEST, rightPanel);
+		layout.putConstraint(SpringLayout.SOUTH, save, 0, SpringLayout.SOUTH, this);
+		layout.putConstraint(SpringLayout.WEST, load, 0, SpringLayout.EAST, save);
+		layout.putConstraint(SpringLayout.SOUTH, load, 0, SpringLayout.SOUTH, this);
 	}
 }

@@ -12,18 +12,19 @@ import cards.view.CardsFrame;
 
 
 
+
 public class IOController
 {
-	public static String loadData(String dataFile, CardsFrame frame)
+	public static ArrayList<String> loadData(String dataFile, CardsFrame frame)
 	{
-		String load = null;
+		ArrayList<String> load = null;
 		
 		try (FileInputStream inputStream = new FileInputStream(dataFile);
 				ObjectInputStream input = new ObjectInputStream(inputStream))
 		{
-			String loadedScore;
-			loadedScore = (String) input.readObject();
-			load = loadedScore;
+			ArrayList<String> loadedDiscard;
+			loadedDiscard = (ArrayList<String>) input.readObject();
+			load = loadedDiscard;
 		}
 		catch (IOException fileError)
 		{
@@ -37,12 +38,12 @@ public class IOController
 		return load;
 	}
 	
-	public static void saveData(String dataFile, CardsFrame frame, String scoreBoard)
+	public static void saveData(String dataFile, CardsFrame frame, ArrayList<String> discard)
 	{
 		try (FileOutputStream outputStream = new FileOutputStream(dataFile);
 				ObjectOutputStream output = new ObjectOutputStream(outputStream))
 		{
-			output.writeObject(scoreBoard);
+			output.writeObject(discard);
 		}
 		catch (IOException fileError)
 		{

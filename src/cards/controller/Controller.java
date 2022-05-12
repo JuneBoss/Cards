@@ -1,7 +1,11 @@
 package cards.controller;
 
 import cards.model.Deck;
+import java.util.ArrayList;
 import java.util.Scanner;
+
+import javax.swing.JOptionPane;
+
 import cards.view.CardsFrame;
 
 public class Controller
@@ -46,6 +50,14 @@ public class Controller
 	 * an instance of cardsFrame 
 	 */
 	private CardsFrame frame;
+	/**
+	 * A string representing the datafile
+	 */
+	private String dataFile;
+	/**
+	 * an arraylist used to store the saved data
+	 */
+	private ArrayList<String> contents;
 	
 	/**
 	 * initializes all the values
@@ -63,6 +75,8 @@ public class Controller
 	this.Lpile3 = new Deck(true, false);
 	this.Rpile3 = new Deck(true, false);
 	this.frame = new CardsFrame(this);
+	this.dataFile = new String("save.cards");
+	this.contents = new ArrayList<String>();
 	}
 	 /**
 	  * sets up the game
@@ -71,12 +85,13 @@ public class Controller
 	{
 		Ldeck.shuffle();
 		Rdeck.add(Ldeck.split());
+		
 	}
 	 
 	/**
 	 * checks if the game is over
 	 * @return
-	 * returns true or falsed based on if the game is over or not
+	 * returns true or false based on if the game is over or not
 	 */
 	public Boolean checkOver()
 	{
@@ -92,6 +107,24 @@ public class Controller
 		}
 		
 		return over;
+	}
+	
+	/**
+	 * a method to save the contents of the discard pile
+	 */
+	public void save()
+	{
+		contents.addAll(Discard.getContents());
+		IOController.saveData(dataFile, frame, contents);
+	}
+	
+	/**
+	 * a method to load the saved contents of a discard pile
+	 */
+	public void load()
+	{
+		ArrayList<String> loadList = IOController.loadData(dataFile, frame);
+		JOptionPane.showMessageDialog(null, loadList);
 	}
 	
 	/**
